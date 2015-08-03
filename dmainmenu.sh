@@ -65,6 +65,7 @@ else
                 Zshrc		         "geany .zshrc"
                 Bashrc		         "geany .bashrc"
                 ToggleCompositing	 "xdotool key ctrl+super+space"
+                Autologin		 "terminal -e sudo systemctl enable xlogin@$(whoami)"
 				
          )
     ;;
