@@ -26,9 +26,9 @@ else
         title="web"
         menu=( \
 #           Web ==========================================
-                Chromium          "chromium" \
-                Wifi-Menu		      "nmcli_dmenu" \
-                Networkmanager    "terminal -e nmtui" \
+                Chromium           "chromium" \
+                Wifi-Men	   "nmcli_dmenu" \
+                Networkmanager     "terminal -e nmtui" \
          )
     ;;
     tools)
@@ -51,19 +51,20 @@ else
         title="settings"
         menu=( \
 #           Settings =====================================
-                Volume            "$0 volume" \
-                Brightness	  	  "dbright" \
-                Wallpaper		      "nitrogen" \
-                Menusettings      "geany $0" \
-                Bspwmrc           "geany .config/bspwm/bspwmrc" \
-                Keybindings		    "geany .config/sxhkd/sxhkdrc" \
-                Logind			      "terminal -e sudo nano /etc/systemd/logind.conf"
-                Appearance		    "lxappearance" \
-                Postinstall		    "terminal -e postinstall" \
-                Autostart		      "geany .config/bspwm/autostart" \
-                Xresources	      "geany .Xresources"
-                Zshrc			        "geany .zshrc"
-                Bashrc			      "geany .bashrc"
+                Volume            	 "$0 volume" \
+                Brightness		 "dbright" \
+                Wallpaper	         "nitrogen" \
+                Menusettings             "geany $0" \
+                Bspwmrc                  "geany .config/bspwm/bspwmrc" \
+                Keybindings	         "geany .config/sxhkd/sxhkdrc" \
+                Logind		         "terminal -e sudo nano /etc/systemd/logind.conf"
+                Appearance	         "lxappearance" \
+                Postinstall	         "terminal -e postinstall" \
+                Autostart	         "geany .config/bspwm/autostart" \
+                Xresources	         "geany .Xresources"
+                Zshrc		         "geany .zshrc"
+                Bashrc		         "geany .bashrc"
+                ToggleCompositing	 "xdotool key ctrl+super+space"
 				
          )
     ;;
@@ -71,7 +72,7 @@ else
         title="Volume"
         menu=( \
 #           Volume controls ==============================
-				mute			  "volume mute"
+		mute			  "volume mute"
                 0%                "volume set 0" \
                 30%               "volume set 30"
                 50%               "volume set 50" \
