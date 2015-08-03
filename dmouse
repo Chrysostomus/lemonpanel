@@ -1,0 +1,4 @@
+#!/bin/sh
+dmenu_recent -i -l 14 -y 30 -w 400 -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB
+#000000
+#99CC99 DejaVu-Sans-14
