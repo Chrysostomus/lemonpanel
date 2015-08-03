@@ -11,10 +11,10 @@ if [ "$1" == "" ]; then
     menu=( \
 #               labels            commands
 #           Main =========================================
-				Run				  "dmouse"
-				Terminal          "terminal"
-				Files			  "pcmanfm"
-				Find			  "finder"
+		Run		  "dmouse"
+		Terminal          "terminal"
+		Files		  "pcmanfm"
+		Find		  "finder"
                 Web               "$0 web"
                 System            "$0 system"
                 Tools             "$0 tools"
@@ -72,7 +72,7 @@ else
         title="Volume"
         menu=( \
 #           Volume controls ==============================
-		mute			  "volume mute"
+		mute		  "volume mute"
                 0%                "volume set 0" \
                 30%               "volume set 30"
                 50%               "volume set 50" \
