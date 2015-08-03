@@ -1,0 +1,74 @@
+#! /bin/sh
+
+# Kill any panel processes older than us, instead of bailing like the example
+# does. That caused one too many panel-less boots for me.
+ 
+while [ $(pgrep -cx panel) -gt 1 ] ; do
+	pkill -ox -9 panel
+done
+ 
+# Kill any remaining trays / xtitle instances so we don't have multiples.
+ 
+killall -9 stalonetray
+killall -9 xtitle
+killall -9 conky
+
+#trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+flavor=${1:-bar}
+export PANEL_HEIGHT="30"
+export PANEL_FIFO="/tmp/panel-fifo"
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+#bspc config top_padding $PANEL_HEIGHT
+
+
+# Colorscheme for mocha
+#BLUE="%{F#FF8AB3B5}"
+#RED="%{F#FFCB6077}"
+#YELLOW="%{F#FFF4BC87}"
+#ORANGE="%{F#FFD28B71}"
+#MAGENTA="%{F#FFA89BB9}"
+#TEAL="%{F#FF7BBdA4}"
+#LIGHTGREY="%{F#FFb8AfAD}"
+#DARKGREY="%{F#FF7E705A}"
+#GREEN="%{F#FF90A950}"
+#PURPLE="%{F#FF9547C9}"
+#BG="%{F#FF3B3228}"
+
+# Colorscheme for default-dark
+BLUE="%{F#FF6A9FB5}"
+RED="%{F#FFAC4142}"
+YELLOW="%{F#FFFF4BF75}"
+ORANGE="%{F#FFD28B71}"
+MAGENTA="%{F#FFAA759F}"
+TEAL="%{F#FF75B5AA}"
+LIGHTGREY="%{F#FFB0B0B0}"
+DARKGREY="%{F#FF505050}"
+GREEN="%{F#FF99CC99}"
+PURPLE="%{F#FF9547C9}"
+BG="%{F#FF151515}"
+INDIANRED="%{F#FFEE6363}"
+
+bspc control --subscribe > "$PANEL_FIFO" &
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
+conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
+#conkywrap &
+volume_status.sh &
+
+case "$flavor" in
+	bar)
+		FONT_FAMILY='Peep :size=12 :style=regular'
+		FONT_FAMILY2='dejavu sans mono for Powerline :size=17 :style=regular'
+		FONT_FAMILY3="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
+		cat "$PANEL_FIFO" | panel_bar | lemonbar -p -g x$PANEL_HEIGHT -f "$FONT_FAMILY" -f "$FONT_FAMILY2" -f "$FONT_FAMILY3" -u 2 -F "$BG" -B "$BG" | sh
+		;;
+	dzen2)
+		FONT_FAMILY='DejaVu Sans'
+		FONT_SIZE=11
+		cat "$PANEL_FIFO" | panel_dzen2 -f "$FONT_FAMILY" -s "$FONT_SIZE" | dzen2 -h $PANEL_HEIGHT -dock -ta l -title-name panel -fn "${FONT_FAMILY}:pixelsize=${FONT_SIZE}" -fg "$COLOR_FOREGROUND" -bg "$COLOR_BACKGROUND" &
+		;;
+esac
+
+wait
