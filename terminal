@@ -1,5 +1,5 @@
 #!/bin/sh
-#export SHELL=/usr/bin/zsh
+export SHELL=/usr/bin/zsh
 urxvtc $@
 if [ $? -eq 2 ]; then
   urxvtd -q -o -f
