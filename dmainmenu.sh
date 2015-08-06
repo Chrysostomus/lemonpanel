@@ -57,15 +57,16 @@ else
                 Menusettings             "geany $0" \
                 Bspwmrc                  "geany .config/bspwm/bspwmrc" \
                 Keybindings	         "geany .config/sxhkd/sxhkdrc" \
-                Logind		         "terminal -e sudo nano /etc/systemd/logind.conf"
+                Dmenurc			 "geany .dmenurc" \
+                Logind		         "terminal -e sudo nano /etc/systemd/logind.conf" \
                 Appearance	         "lxappearance" \
                 Postinstall	         "terminal -e postinstall" \
                 Autostart	         "geany .config/bspwm/autostart" \
-                Xresources	         "geany .Xresources"
-                Zshrc		         "geany .zshrc"
-                Bashrc		         "geany .bashrc"
-                ToggleCompositing	 "xdotool key ctrl+super+space"
-                Autologin		 "terminal -e sudo systemctl enable xlogin@$(whoami)"
+                Xresources	         "geany .Xresources" \
+                Zshrc		         "geany .zshrc" \
+                Bashrc		         "geany .bashrc" \
+                ToggleCompositing	 "xdotool key ctrl+super+space" \
+                Autologin		 "terminal -e sudo systemctl enable xlogin@$(whoami)" \
 				
          )
     ;;
@@ -73,9 +74,9 @@ else
         title="Volume"
         menu=( \
 #           Volume controls ==============================
-		mute		  "volume mute"
+		mute		  "volume mute" \
                 0%                "volume set 0" \
-                30%               "volume set 30"
+                30%               "volume set 30" \
                 50%               "volume set 50" \
                 70%               "volume set 70" \
                 100%              "volume set 100" \
