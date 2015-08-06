@@ -13,7 +13,7 @@ if [ "$1" == "" ]; then
 #           Main =========================================
 		Run		  "dmouse"
 		Terminal          "terminal"
-		Files		  "pcmanfm"
+		Files		  "spacefm"
 		Find		  "finder"
                 Web               "$0 web"
                 System            "$0 system"
