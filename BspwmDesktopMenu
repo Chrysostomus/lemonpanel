@@ -1,6 +1,10 @@
 #!/bin/bash
 
-#       Custom dmenu-bind.sh
+if ! [ -f "$HOME/.dmenurc" ]; then
+	cp /usr/share/dmenu/dmenurc $HOME/.dmenurc
+fi
+. $HOME/.dmenurc
+
 eval $(xdotool getmouselocation --shell)
 menu_widht=300
 monitor_widht=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $3}')
