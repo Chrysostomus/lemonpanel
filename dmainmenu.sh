@@ -6,6 +6,11 @@
 #       Distributed as public domain. 
 #       Modified for lemonbar.
 
+if ! [ -f "$HOME/.dmenurc" ]; then
+        cp /usr/share/dmenu/dmenurc $HOME/.dmenurc
+fi
+. $HOME/.dmenurc
+
 if [ "$1" == "" ]; then
     title="Main"
     menu=( \
