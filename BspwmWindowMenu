@@ -25,13 +25,13 @@ if [ "$1" == "" ]; then
     menu=( \
 #               labels            commands
 #           Main =========================================
-                Window                "$0 window"
+                Window              "$0 window"
                 Move                "$0 moveto"
                 ManualSplit         "$0 manual"
-               	Close			      "bspc window -c"
-				CloseWindowClass    "xdo close -cd"
-				Hide				"whid hide"
-				Urgent			      "bspc window -f next.urgent"
+               	Close	            "bspc window -c"
+		CloseWindowClass    "xdo close -cd"
+		Hide		    "whid hide"
+		Urgent		    "bspc window -f next.urgent"
     )
 else
     case $1 in
@@ -51,11 +51,11 @@ else
         title="Moveto"
         menu=( \
 #           Tools ========================================
-                Desktop           "bspwm-zenity move-to-desktop" \
+                Desktop           "bspwm-menu move-to-desktop" \
                 NextFreeDesktop      "bspc window -d next.free" \
                 LastFocusedDesktop   "bspc window -d last" \
-                Monitor           "geany" \
-                Promote           "bspc window -w biggest.local" \
+                Monitor              "geany" \
+                Promote              "bspc window -w biggest.local" \
          )
     ;;
     manual)
