@@ -24,6 +24,8 @@ if [ "$1" == "" ]; then
                 System            "$0 system"
                 Tools             "$0 tools"
                 Settings          "$0 settings"
+		Keybindings	  "geany .config/sxhkd/sxhkdrc"
+                Manual		  "terminal -e postinstall"
     )
 else
     case $1 in
@@ -106,7 +108,7 @@ for (( count = 0 ; count < ${#menu[*]}; count++ )); do
 
 done
 
-select=`echo -e $menu_labels | dmenu -p $title -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -l 10 -y $PANEL_HEIGHT -w 400`
+select=`echo -e $menu_labels | dmenu -p $title -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -l 20 -y $PANEL_HEIGHT -w 400`
 
 if [ "$select" != "" ]; then
 
