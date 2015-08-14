@@ -24,7 +24,7 @@ if [ "$1" == "" ]; then
                 System            "$0 system"
                 Tools             "$0 tools"
                 Settings          "$0 settings"
-		Keybindings	  "geany .config/sxhkd/sxhkdrc"
+		Keybindings	  "terminal -name 'floaterm' -geometry 81x65 -e keybindings.sh"
                 Manual		  "terminal -e postinstall"
     )
 else
@@ -33,6 +33,7 @@ else
         title="web"
         menu=( \
 #           Web ==========================================
+		ReturnToMain       "dmainmenu.sh"
                 Chromium           "chromium" \
                 Wifi-Men	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
@@ -42,6 +43,7 @@ else
         title="tools"
         menu=( \
 #           Tools ========================================
+		ReturnToMain       "dmainmenu.sh"
                 Geany             "geany" \
                 Geanysudo         "gksudo geany" \
          )
@@ -50,7 +52,8 @@ else
         title="system"
         menu=( \
 #           System =======================================
-                Files            "pcmanfm" \
+		ReturnToMain     "dmainmenu.sh"
+                Files            "spacefm" \
                 PackageManager   "terminal -e yaourt-gui" \
          )
     ;;
@@ -58,6 +61,7 @@ else
         title="settings"
         menu=( \
 #           Settings =====================================
+		ReturnToMain             "dmainmenu.sh"
                 Volume            	 "$0 volume" \
                 Brightness		 "dbright" \
                 Wallpaper	         "nitrogen" \
@@ -81,6 +85,7 @@ else
         title="Volume"
         menu=( \
 #           Volume controls ==============================
+		ReturnToMain      "dmainmenu.sh"
 		mute		  "volume mute" \
                 0%                "volume set 0" \
                 30%               "volume set 30" \
