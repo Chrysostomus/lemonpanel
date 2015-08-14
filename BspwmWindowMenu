@@ -25,9 +25,9 @@ if [ "$1" == "" ]; then
     menu=( \
 #               labels            commands
 #           Main =========================================
-                Window              "$0 window"
-                Move                "$0 moveto"
-                ManualSplit         "$0 manual"
+                Window              "$0 Window"
+                Move                "$0 Moveto"
+                ManualSplit         "$0 Manual"
                	Close	            "bspc window -c"
 		CloseWindowClass    "xdo close -cd"
 		Hide		    "whid hide"
