@@ -9,7 +9,7 @@ eval $(xdotool getmouselocation --shell)
 menu_widht=300
 monitor_widht=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $3}')
 monitor_height=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $4}')
-lines=14
+lines=20
 menu_height=$(echo "$lines * 23" | bc)
 maxx=$(echo "$monitor_widht - $menu_widht" | bc)
 miny=$PANEL_HEIGHT
@@ -36,7 +36,7 @@ if [ "$1" == "" ]; then
                 FocusFollowsPointer "toggle-focus-follows-pointer"
                 PointerFollowsFocus "toggle-pointer-follows-focus"
                 ShowHidden			"whid dmenu"
-                
+                Autogap             "autogap"
     )
 else
     case $1 in
