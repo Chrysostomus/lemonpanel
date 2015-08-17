@@ -35,7 +35,7 @@ else
 #           Web ==========================================
 		ReturnToMain       "dmainmenu.sh"
                 Chromium           "chromium" \
-                Wifi-Men	   "nmcli_dmenu" \
+                Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
          )
     ;;
