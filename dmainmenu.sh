@@ -33,8 +33,8 @@ else
         title="web"
         menu=( \
 #           Web ==========================================
-		ReturnToMain       "dmainmenu.sh"
-                Chromium           "chromium" \
+		ReturnToMain       "dmainmenu.sh" \
+                Chromium           "midori" \
                 Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
          )
@@ -43,28 +43,30 @@ else
         title="tools"
         menu=( \
 #           Tools ========================================
-		ReturnToMain       "dmainmenu.sh"
+		ReturnToMain      "dmainmenu.sh" \
                 Geany             "geany" \
                 Geanysudo         "gksudo geany" \
+                Gnome-disks	  "gnome-disks" \
          )
     ;;
     system)
         title="system"
         menu=( \
 #           System =======================================
-		ReturnToMain     "dmainmenu.sh"
+		ReturnToMain     "dmainmenu.sh" \
                 Files            "spacefm" \
                 PackageManager   "terminal -e yaourt-gui" \
+                Gnome-disks	 "gnome-disks" \
          )
     ;;
     settings)
         title="settings"
         menu=( \
 #           Settings =====================================
-		ReturnToMain             "dmainmenu.sh"
+		ReturnToMain             "dmainmenu.sh" \
                 Volume            	 "$0 volume" \
                 Brightness		 "dbright" \
-                Wallpaper	         "nitrogen" \
+                Wallpaper	         "wallpaper.sh" \
                 Menusettings             "geany $0" \
                 Bspwmrc                  "geany .config/bspwm/bspwmrc" \
                 Keybindings	         "geany .config/sxhkd/sxhkdrc" \
@@ -85,13 +87,14 @@ else
         title="Volume"
         menu=( \
 #           Volume controls ==============================
-		ReturnToMain      "dmainmenu.sh"
+		ReturnToMain      "dmainmenu.sh" \
 		mute		  "volume mute" \
                 0%                "volume set 0" \
                 30%               "volume set 30" \
                 50%               "volume set 50" \
                 70%               "volume set 70" \
                 100%              "volume set 100" \
+                Pavucontrol       "pavucontrol" \
          )
     ;;
     
