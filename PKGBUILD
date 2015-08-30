@@ -42,4 +42,5 @@ package () {
 	install -m755 "$srcdir/$pkgname/terminal" "$pkgdir/usr/bin/terminal"
 	install -m755 "$srcdir/$pkgname/volume" "$pkgdir/usr/bin/volume"
 	install -m755 "$srcdir/$pkgname/volume_status.sh" "$pkgdir/usr/bin/volume_status.sh"
+	install -m755 "$srcdir/$pkgname/zensu" "$pkgdir/usr/bin/zensu"
 }
