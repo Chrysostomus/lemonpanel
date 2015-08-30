@@ -18,7 +18,8 @@ if [ "$1" == "" ]; then
 #           Main =========================================
 		Run		  "dmouse"
 		Terminal          "terminal"
-		Files		  "spacefm"
+		Files		  "xdg-open ~"
+		Browser           "xdg-open www.manjaro.org" \
 		Find		  "finder"
                 Web               "$0 web"
                 System            "$0 system"
@@ -34,7 +35,7 @@ else
         menu=( \
 #           Web ==========================================
 		ReturnToMain       "dmainmenu.sh" \
-                Chromium           "midori" \
+                Browser            "xdg-open www.manjaro.org" \
                 Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
          )
@@ -45,7 +46,7 @@ else
 #           Tools ========================================
 		ReturnToMain      "dmainmenu.sh" \
                 Geany             "geany" \
-                Geanysudo         "gksudo geany" \
+                Geanysudo         "zensu geany" \
                 Gnome-disks	  "gnome-disks" \
          )
     ;;
@@ -67,7 +68,7 @@ else
                 Volume            	 "$0 volume" \
                 Brightness		 "dbright" \
                 Wallpaper	         "wallpaper.sh" \
-                Menusettings             "geany $0" \
+                Menusettings             "zensu geany $0" \
                 Bspwmrc                  "geany .config/bspwm/bspwmrc" \
                 Keybindings	         "geany .config/sxhkd/sxhkdrc" \
                 Dmenurc			 "geany .dmenurc" \
