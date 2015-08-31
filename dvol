@@ -32,5 +32,5 @@ case "$choice" in
   70) volume set 70 & ;;
   50) volume set 50 & ;;
   30) volume set 30 & ;;
-  settings) pavucontrol &&volume_status.sh & ;;
+  settings) smartsplit &&pavucontrol &&volume_status.sh & ;;
 esac
