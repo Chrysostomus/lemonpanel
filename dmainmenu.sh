@@ -45,8 +45,8 @@ else
         menu=( \
 #           Tools ========================================
 		ReturnToMain      "dmainmenu.sh" \
-                Geany             "geany" \
-                Geanysudo         "zensu geany" \
+                Editor            "Geany" \
+                RootEditr         "zensu geany" \
                 Gnome-disks	  "gnome-disks" \
          )
     ;;
@@ -68,17 +68,17 @@ else
                 Volume            	 "$0 volume" \
                 Brightness		 "dbright" \
                 Wallpaper	         "wallpaper.sh" \
-                Menusettings             "zensu geany $0" \
-                Bspwmrc                  "geany .config/bspwm/bspwmrc" \
-                Keybindings	         "geany .config/sxhkd/sxhkdrc" \
-                Dmenurc			 "geany .dmenurc" \
+                Menusettings             "zensu xdg-open $0" \
+                Bspwmrc                  "xdg-open .config/bspwm/bspwmrc" \
+                Keybindings	         "xdg-open .config/sxhkd/sxhkdrc" \
+                Dmenurc			 "xdg-open .dmenurc" \
                 Logind		         "terminal -e sudo nano /etc/systemd/logind.conf" \
                 Appearance	         "lxappearance" \
                 Postinstall	         "terminal -e postinstall" \
-                Autostart	         "geany .config/bspwm/autostart" \
-                Xresources	         "geany .Xresources" \
-                Zshrc		         "geany .zshrc" \
-                Bashrc		         "geany .bashrc" \
+                Autostart	         "xdg-open .config/bspwm/autostart" \
+                Xresources	         "xdg-open .Xresources" \
+                Zshrc		         "xdg-open .zshrc" \
+                Bashrc		         "xdg-open .bashrc" \
                 ToggleCompositing	 "xdotool key ctrl+super+space" \
                 Autologin		 "terminal -e sudo systemctl enable xlogin@$(whoami)" \
 				
