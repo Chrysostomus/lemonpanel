@@ -45,7 +45,7 @@ else
         menu=( \
 #           Tools ========================================
 		ReturnToMain      "dmainmenu.sh" \
-                Editor            "gedit || medit || leafpad || geany || kate" \
+                Editor            "gedit || medit || leafpad || geany || mousepad || kate" \
                 RootEditor        "zensu gedit" \
                 Gnome-disks	  "gnome-disks" \
          )
@@ -55,7 +55,7 @@ else
         menu=( \
 #           System =======================================
 		ReturnToMain     "dmainmenu.sh" \
-                Files            "spacefm" \
+                Files            "xdg-open ~" \
                 PackageManager   "terminal -e yaourt-gui" \
                 Gnome-disks	 "gnome-disks" \
          )
