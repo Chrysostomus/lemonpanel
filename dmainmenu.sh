@@ -19,7 +19,7 @@ if [ "$1" == "" ]; then
 		Run		  "dmouse"
 		Terminal          "terminal"
 		Files		  "xdg-open ~"
-		Browser           "xdg-open www.manjaro.org" \
+		Browser           "xdg-open https://manjaro.github.io/" \
 		Find		  "finder"
                 Web               "$0 web"
                 System            "$0 system"
@@ -35,7 +35,7 @@ else
         menu=( \
 #           Web ==========================================
 		ReturnToMain       "dmainmenu.sh" \
-                Browser            "xdg-open www.manjaro.org" \
+                Browser            "xdg-open https://manjaro.github.io/" \
                 Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
          )
@@ -45,8 +45,8 @@ else
         menu=( \
 #           Tools ========================================
 		ReturnToMain      "dmainmenu.sh" \
-                Editor            "Geany" \
-                RootEditr         "zensu geany" \
+                Editor            "gedit || medit || leafpad || geany || kate" \
+                RootEditor        "zensu gedit" \
                 Gnome-disks	  "gnome-disks" \
          )
     ;;
