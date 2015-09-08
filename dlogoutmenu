@@ -29,7 +29,7 @@ YP=$Y
 choice=$(echo -e "logout\nshutdown\nreboot\nsuspend\nhibernate" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
 
 case "$choice" in
-  logout) bspc quit 1 && pkill panel & ;;
+  logout) bspc quit 1 && pkill lemonpanel && pkill lemonbar && pkill conky & ;;
   shutdown) poweroff & ;;
   reboot) reboot & ;;
   suspend) systemctl suspend & ;;
