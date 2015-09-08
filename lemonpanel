@@ -21,22 +21,6 @@ export PANEL_FIFO="/tmp/panel-fifo"
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
-#bspc config top_padding $PANEL_HEIGHT
-
-
-# Colorscheme for mocha
-#BLUE="%{F#FF8AB3B5}"
-#RED="%{F#FFCB6077}"
-#YELLOW="%{F#FFF4BC87}"
-#ORANGE="%{F#FFD28B71}"
-#MAGENTA="%{F#FFA89BB9}"
-#TEAL="%{F#FF7BBdA4}"
-#LIGHTGREY="%{F#FFb8AfAD}"
-#DARKGREY="%{F#FF7E705A}"
-#GREEN="%{F#FF90A950}"
-#PURPLE="%{F#FF9547C9}"
-#BG="%{F#FF3B3228}"
-
 # Colorscheme for default-dark
 BLUE="%{F#FF6A9FB5}"
 RED="%{F#FFAC4142}"
@@ -54,7 +38,6 @@ INDIANRED="%{F#FFEE6363}"
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
 conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
-#conkywrap &
 volume_status.sh &
 
 case "$flavor" in
