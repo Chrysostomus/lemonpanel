@@ -45,7 +45,7 @@ else
         menu=( \
 #           Tools ========================================
 		ReturnToMain      "dmainmenu.sh" \
-                Editor            "$GUI_EDITOR || gedit || medit || leafpad || geany || mousepad || kate" \
+                Editor            "$GUI_EDITOR" \
                 RootEditor        "zensu $GUI_EDITOR" \
                 Gnome-disks	  "gnome-disks" \
          )
