@@ -18,7 +18,7 @@ if [ "$1" == "" ]; then
 #           Main =========================================
 		Run		  "dmouse"
 		Terminal          "terminal"
-		Files		  "xdg-open ~"
+		Files		  "spacefm"
 		Browser           "xdg-open https://manjaro.github.io/" \
 		Find		  "finder"
                 Web               "$0 web"
@@ -55,7 +55,7 @@ else
         menu=( \
 #           System =======================================
 		ReturnToMain     "dmainmenu.sh" \
-                Files            "xdg-open ~" \
+                Files            "spacefm" \
                 PackageManager   "terminal -e yaourt-gui" \
                 Gnome-disks	 "gnome-disks" \
          )
@@ -67,7 +67,7 @@ else
 		ReturnToMain             "dmainmenu.sh" \
                 Volume            	 "$0 volume" \
                 Brightness		 "dbright" \
-                Wallpaper	         "wallpaper.sh" \
+                Wallpaper	         "wallpaper" \
                 Menusettings             "zensu xdg-open $0" \
                 Bspwmrc                  "xdg-open .config/bspwm/bspwmrc" \
                 Keybindings	         "xdg-open .config/sxhkd/sxhkdrc" \
