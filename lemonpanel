@@ -16,8 +16,6 @@ killall -9 conky
 #trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
 flavor=${1:-bar}
-export PANEL_HEIGHT="30"
-export PANEL_FIFO="/tmp/panel-fifo"
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
