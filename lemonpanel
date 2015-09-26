@@ -40,9 +40,6 @@ volume_status.sh &
 
 case "$flavor" in
 	bar)
-		FONT_FAMILY='Peep :size=12 :style=regular'
-		FONT_FAMILY2='dejavu sans mono for Powerline :size=17 :style=regular'
-		FONT_FAMILY3="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
 		cat "$PANEL_FIFO" | panel_bar | lemonbar -p -g x$PANEL_HEIGHT -f "$FONT_FAMILY" -f "$FONT_FAMILY2" -f "$FONT_FAMILY3" -u 2 -F "$BG" -B "$BG" | sh
 		;;
 	dzen2)
