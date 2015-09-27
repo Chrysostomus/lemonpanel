@@ -24,11 +24,10 @@ YP=$Y
 [[ $YP -lt $miny ]] && YP=$miny
 [[ $YP -gt $maxy ]] && YP=$maxy
 
-#DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb '#99CC99' -sf '#000000''
-#DMENU='dmenu $DMENU_OPTIONS'
-choice=$(echo -e "logout\nshutdown\nreboot\nsuspend\nhibernate" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
+choice=$(echo -e "screenlock\nlogout\nshutdown\nreboot\nsuspend\nhibernate" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
 
 case "$choice" in
+  screenlock) screenlock & ;;
   logout) bspc quit 1 && pkill lemonpanel && pkill lemonbar && pkill conky & ;;
   shutdown) poweroff & ;;
   reboot) reboot & ;;
