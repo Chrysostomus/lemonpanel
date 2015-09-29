@@ -38,6 +38,7 @@ else
                 Browser            "xdg-open https://manjaro.github.io/" \
                 Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
+                Firewall           "gufw" \
          )
     ;;
     tools)
