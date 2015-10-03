@@ -58,6 +58,8 @@ else
 		ReturnToMain     "dmainmenu.sh" \
                 Files            "spacefm" \
                 PackageManager   "terminal -e yaourt-gui" \
+                EditMirrorlist	 "terminal -e sudo pacman-mirrors -i"
+                SystemUpdates    "terminal -e allservers"
                 Gnome-disks	 "gnome-disks" \
          )
     ;;
