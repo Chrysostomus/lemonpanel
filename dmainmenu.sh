@@ -81,7 +81,6 @@ else
                 Zshrc		         "xdg-open .zshrc" \
                 Bashrc		         "xdg-open .bashrc" \
                 ToggleCompositing	 "xdotool key ctrl+super+space" \
-                Autologin		 "terminal -e sudo systemctl enable xlogin@$(whoami)" \
 				
          )
     ;;
