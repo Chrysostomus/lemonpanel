@@ -1,0 +1,2 @@
+#!/bin/sh
+pulseaudio-ctl $@; volume_status.sh

@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# a simple dmenu session script 
+#
+###
+
+if ! [ -f "$HOME/.dmenurc" ]; then
+	cp /usr/share/dmenu/dmenurc $HOME/.dmenurc
+fi
+. $HOME/.dmenurc
+
+eval $(xdotool getmouselocation --shell)
+menu_widht=200
+monitor_widht=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $3}')
+monitor_height=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $4}')
+lines=14
+menu_height=$(echo "$lines * 23" | bc)
+maxx=$(echo "$monitor_widht - $menu_widht" | bc)
+miny=$PANEL_HEIGHT
+maxy=$(echo "$monitor_height - $menu_height" | bc)
+XP=$X
+[[ $XP -gt $maxx ]] && XP=$maxx
+YP=$Y
+[[ $YP -lt $miny ]] && YP=$miny
+[[ $YP -gt $maxy ]] && YP=$maxy
+
+choice=$(echo -e "screenlock\nlogout\nshutdown\nreboot\nsuspend\nhibernate" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
+
+case "$choice" in
+  screenlock) screenlock & ;;
+  logout) bspc quit 1 && pkill lemonpanel && pkill lemonbar && pkill conky & ;;
+  shutdown) poweroff & ;;
+  reboot) reboot & ;;
+  suspend) systemctl suspend & ;;
+  hibernate) systemctl hibernate & ;;
+esac
