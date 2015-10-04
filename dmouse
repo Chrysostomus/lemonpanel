@@ -1,7 +1,0 @@
-#!/bin/sh
-if ! [ -f "$HOME/.dmenurc" ]; then
-        cp /usr/share/dmenu/dmenurc $HOME/.dmenurc
-fi
-. $HOME/.dmenurc
-
-dmenu_recent -i -l 14 -y 30 -w 400 -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -h PANEL_HEIGHT
