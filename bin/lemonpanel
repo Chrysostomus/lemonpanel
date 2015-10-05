@@ -14,7 +14,7 @@ killall -9 xtitle
 killall -9 conky
 
 #trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
-
+export PANEL_FIFO="/tmp/panel-fifo"
 flavor=${1:-bar}
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
@@ -38,18 +38,13 @@ xtitle -sf 'T%s' > "$PANEL_FIFO" &
 conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
 volume_status.sh &
 
-mainfont=${$FONT_FAMILY:='Peep :size=12 :style=regular'}
-powerlinefont=${$FONT_FAMILY2:=''dejavu sans mono for Powerline :size=17 :style=regular''}
-iconfont=${$FONT_FAMILY3:="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"}
+[[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont='Peep :size=12 :style=regular'
+[[  $FONT_FAMILY2 && ${FONT_FAMILY2-x} ]] && powerlinefont=$FONT_FAMILY2 || powerlinefont='dejavu sans mono for Powerline :size=17 :style=regular
+[[  $FONT_FAMILY3 && ${FONT_FAMILY3-x} ]] && iconfont=$FONT_FAMILY3 || iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
 
 case "$flavor" in
 	bar)
 		cat "$PANEL_FIFO" | panel_bar | lemonbar -p -g x$PANEL_HEIGHT -f "$mainfont" -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
-		;;
-	dzen2)
-		FONT_FAMILY='DejaVu Sans'
-		FONT_SIZE=11
-		cat "$PANEL_FIFO" | panel_dzen2 -f "$FONT_FAMILY" -s "$FONT_SIZE" | dzen2 -h $PANEL_HEIGHT -dock -ta l -title-name panel -fn "${FONT_FAMILY}:pixelsize=${FONT_SIZE}" -fg "$COLOR_FOREGROUND" -bg "$COLOR_BACKGROUND" &
 		;;
 esac
 
