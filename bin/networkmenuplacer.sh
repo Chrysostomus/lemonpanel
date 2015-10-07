@@ -18,3 +18,4 @@ YP=$Y
 
 oldx=$(awk '/x/{print $3}' .config/networkmanager-dmenu/config.ini)
 sed -i 's/'$oldx'/'$XP'/g' .config/networkmanager-dmenu/config.ini
+oldy=$(awk '/y/{print $3}' .config/networkmanager-dmenu/config.ini)
