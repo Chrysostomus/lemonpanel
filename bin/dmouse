@@ -4,4 +4,4 @@ if ! [ -f "$HOME/.dmenurc" ]; then
 fi
 . $HOME/.dmenurc
 
-dmenu_recent -i -l 14 -y 30 -w 400 -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -h PANEL_HEIGHT
+dmenu_recent -i -l 14 -y $PANEL_HEIGHT -w 400 -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB
