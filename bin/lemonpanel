@@ -38,7 +38,7 @@ xtitle -sf 'T%s' > "$PANEL_FIFO" &
 conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
 volume_status.sh &
 
-[[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont='Peep :size=12 :style=regular'
+[[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont='-zevv-*-*-*-*-*-20-*-*-*-*-*-*-*'
 [[  $FONT_FAMILY2 && ${FONT_FAMILY2-x} ]] && powerlinefont=$FONT_FAMILY2 || powerlinefont='dejavu sans mono for Powerline :size=17 :style=regular'
 [[  $FONT_FAMILY3 && ${FONT_FAMILY3-x} ]] && iconfont=$FONT_FAMILY3 || iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
 
