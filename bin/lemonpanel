@@ -91,7 +91,7 @@ while read -r line ; do
 		done
 	;;
 	esac
-	printf "%s\n" "$logo $wm_infos $menu %{c}$title $sys_infos%{F#FF000000}$volume_infos${conky_infos} %{A:dlogoutmenu:}%{A}"
+	printf "%s\n" "$logo$wm_infos $menu %{c}$title $sys_infos%{F#FF000000}$volume_infos${conky_infos} %{A:dlogoutmenu:}%{A}"
 done
 }
 
