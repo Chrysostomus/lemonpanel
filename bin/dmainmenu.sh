@@ -34,7 +34,7 @@ else
         title="web"
         menu=( \
 #           Web ==========================================
-		ReturnToMain       "dmainmenu.sh" \
+		ReturnToMain       "$0" \
                 Browser            "xdg-open https://manjaro.github.io/" \
                 Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
@@ -45,7 +45,7 @@ else
         title="tools"
         menu=( \
 #           Tools ========================================
-		ReturnToMain      "dmainmenu.sh" \
+		ReturnToMain      "$0" \
                 Editor            "$GUI_EDITOR" \
                 RootEditor        "zensu $GUI_EDITOR" \
                 Gnome-disks	  "gnome-disks" \
@@ -55,7 +55,7 @@ else
         title="system"
         menu=( \
 #           System =======================================
-		ReturnToMain     "dmainmenu.sh" \
+		ReturnToMain     "$0" \
                 Files            "spacefm" \
                 PackageManager   "terminal -e yaourt-gui" \
                 EditMirrorlist	 "terminal -e sudo pacman-mirrors -i" \
@@ -68,7 +68,7 @@ else
         title="settings"
         menu=( \
 #           Settings =====================================
-		ReturnToMain             "dmainmenu.sh" \
+		ReturnToMain             "$0" \
                 Volume            	 "$0 volume" \
                 Brightness		 "dbright" \
                 Wallpaper	         "wallpaper" \
@@ -91,7 +91,7 @@ else
         title="Volume"
         menu=( \
 #           Volume controls ==============================
-		ReturnToMain      "dmainmenu.sh" \
+		ReturnToMain      "$0" \
 		mute		  "volume mute" \
                 0%                "volume set 0" \
                 30%               "volume set 30" \
