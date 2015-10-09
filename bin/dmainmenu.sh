@@ -58,9 +58,9 @@ else
 		ReturnToMain     "$0" \
                 Files            "spacefm" \
                 PackageManager   "terminal -e yaourt-gui" \
-                EditMirrorlist	 "terminal -e sudo pacman-mirrors -i" \
+#                EditMirrorlist	 "terminal -e sudo pacman-mirrors -i" \
                 SystemUpdates    "terminal -e allservers" \
-                DowngradePackage "terminal -e downgrade $(sudo pacman -Qq | dmenu $DMENU_OPTIONS -p "Select package to downgrade")" \
+#                DowngradePackage "terminal -e downgrade $(sudo pacman -Qq | dmenu $DMENU_OPTIONS -p "Select package to downgrade")" \
                 Gnome-disks	 "gnome-disks" \
          )
     ;;
@@ -69,7 +69,7 @@ else
         menu=( \
 #           Settings =====================================
 		ReturnToMain             "$0" \
-                Volume            	 "$0 volume" \
+#                Volume            	 "$0 volume" \
                 Brightness		 "dbright" \
                 Wallpaper	         "wallpaper" \
                 Menusettings             "zensu xdg-open $0" \
