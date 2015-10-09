@@ -1,51 +1,100 @@
 #! /bin/sh
 
-# Kill any panel processes older than us, instead of bailing like the example
-# does. That caused one too many panel-less boots for me.
- 
+# Kill any panel processes older than us, 
 while [ $(pgrep -cx panel) -gt 1 ] ; do
 	pkill -ox -9 panel
+	killall -9 stalonetray
+	killall -9 xtitle
+	killall -9 conky
 done
- 
-# Kill any remaining trays / xtitle instances so we don't have multiples.
- 
-killall -9 stalonetray
-killall -9 xtitle
-killall -9 conky
 
-#trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
 export PANEL_FIFO="/tmp/panel-fifo"
-flavor=${1:-bar}
+
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
-# Colorscheme for default-dark
-BLUE="%{F#FF6A9FB5}"
-RED="%{F#FFAC4142}"
-YELLOW="%{F#FFFF4BF75}"
-ORANGE="%{F#FFD28B71}"
-MAGENTA="%{F#FFAA759F}"
-TEAL="%{F#FF75B5AA}"
-LIGHTGREY="%{F#FFB0B0B0}"
-DARKGREY="%{F#FF505050}"
-GREEN="%{F#FF99CC99}"
-PURPLE="%{F#FF9547C9}"
-BG="%{F#FF151515}"
-INDIANRED="%{F#FFEE6363}"
+#Set fonts if unset
+[[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont='Peep :size=12 :style=regular'
+[[  $FONT_FAMILY2 && ${FONT_FAMILY2-x} ]] && powerlinefont=$FONT_FAMILY2 || powerlinefont='dejavu sans mono for Powerline :size=17 :style=regular'
+[[  $FONT_FAMILY3 && ${FONT_FAMILY3-x} ]] && iconfont=$FONT_FAMILY3 || iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
 
+
+#Set aliases and variables
+CBR='%{B-}'
+CB1='%{B#FF99CC99}'
+CB2='%{B#FF4E4E4E}'
+CFR='%{F-}'
+CF1='%{F#FF000000}'
+CF2='%{F#FF99CC99}'
+CF3='%{F#FFD75F5F}'
+CF4='%{F#FF4E4E4E}'
+LA='%{l}'
+RA='%{r}'
+AC='%{A:'
+AB=':}'
+AE='%{A}'
+logo="${CFR}${CF1}${CB1}${AC}dmainmenu.sh&disown${AB} ${AE}"
+menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE}${CF2}%{B#FF000000}%{B#FF000000}${CF4}" 
+
+#Collect info for the panel
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
 conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
 volume_status.sh &
 
-[[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont='-zevv-*-*-*-*-*-20-*-*-*-*-*-*-*'
-[[  $FONT_FAMILY2 && ${FONT_FAMILY2-x} ]] && powerlinefont=$FONT_FAMILY2 || powerlinefont='dejavu sans mono for Powerline :size=17 :style=regular'
-[[  $FONT_FAMILY3 && ${FONT_FAMILY3-x} ]] && iconfont=$FONT_FAMILY3 || iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
+#Format info in orderly fashion
+function lemon {
+while read -r line ; do
+	case $line in
+	S*)
+		sys_infos="${RA}${line#?}"
+	;;
+	C*)
+	        conky_infos="%{F#FF99CC99}${line#?}"
+    ;;
+	V*)
+        	volume_infos="${RA}%{F#FF99CC99} ${line#?} "
+    ;;    
+	T*)
+		formatted=$(echo ${line#?} | cut -c1-70)
+		title="${CFR} %{A2:bspc desktop -l next:}${AC}MonocleSwitcher${AB}${formatted}${AE}${AE} "
+	;;
+	W*)
+		wm_infos="%{B#FF99CC99}"
+		IFS=':'
+		set -- ${line#?}
+		while [ $# -gt 0 ] ; do
+			item=$1
+			name=${item#?}
+			case $item in
+			[OFU]*)
+				# active desktop
+				wm_infos="${wm_infos}${CF1}${AC}bspc desktop -f ${name}${AB} ${AE}${CFR}"
+			;;
+			o*)
+				# inactive but occupied desktop
+				wm_infos="${wm_infos}${CF1}${AC}bspc desktop -f ${name}${AB} ${AE}${CFR}"
+			;;
+			f*)
+				# inactive desktop
+				wm_infos="${wm_infos}${CF1}${AC}bspc desktop -f ${name}${AB} ${AE}${CFR}"
+			;;
+			u*)
+				# urgent desktop
+				wm_infos="${wm_infos}${CF3}${AC}bspc desktop -f ${name}${AB} ●${AE}${CFR}"
+			;;
+			esac
+			shift
+		done
+	;;
+	esac
+	printf "%s\n" "$logo $wm_infos $menu %{c}$title $sys_infos%{F#FF000000}$volume_infos${conky_infos} %{A:dlogoutmenu:}%{A}"
+done
+}
 
-case "$flavor" in
-	bar)
-		cat "$PANEL_FIFO" | panel_bar | lemonbar -p -g x$PANEL_HEIGHT -f "$mainfont" -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
-		;;
-esac
+#Actually run the panel
+cat "$PANEL_FIFO" | lemon | lemonbar -p -g x$PANEL_HEIGHT -f "$mainfont" -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
 
 wait
