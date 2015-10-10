@@ -1,12 +1,20 @@
 #! /bin/sh
 
 # Kill any panel processes older than us, 
-while [ $(pgrep -cx panel) -gt 1 ] ; do
-	pkill -ox -9 panel
+while [ $(pgrep -cx lemonpanel) -gt 1 ] ; do
+	pkill -ox -9 lemonpanel
 	killall -9 stalonetray
 	killall -9 xtitle
 	killall -9 conky
 done
+
+if [ $(pgrep -cx lemonbar) -gt 1 ] ; then
+	printf "%s\n" "The panel is already running."
+    while [[ $(pgrep -c "lemonbar") != 0 ]]
+    do
+        pkill -n -9 "lemonbar"
+    done
+fi
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
