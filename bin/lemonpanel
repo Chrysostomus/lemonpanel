@@ -24,7 +24,7 @@ export PANEL_FIFO="/tmp/panel-fifo"
 mkfifo "$PANEL_FIFO"
 
 #Set fonts if unset
-[[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont='-zevv-peep-medium-*-normal--20-175-*-*-c-*-iso8859-15'
+[[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont="-zevv-peep-medium-*-normal--20-175-*-*-c-*-iso8859-15"
 [[  $FONT_FAMILY2 && ${FONT_FAMILY2-x} ]] && powerlinefont=$FONT_FAMILY2 || powerlinefont='dejavu sans mono for Powerline :size=17 :style=regular'
 [[  $FONT_FAMILY3 && ${FONT_FAMILY3-x} ]] && iconfont=$FONT_FAMILY3 || iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
 #Set height if unset
