@@ -76,7 +76,7 @@ menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
 conkywrap && conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
-volume_status.sh &
+volume_status &
 
 #Format info in orderly fashion
 function lemon {
