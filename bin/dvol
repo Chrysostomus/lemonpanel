@@ -22,32 +22,15 @@ YP=$Y
 [[ $YP -lt $miny ]] && YP=$miny
 [[ $YP -gt $maxy ]] && YP=$maxy
 
-panel_volicon()
-{
-        volStatus=$(pulseaudio-ctl full-status | awk '{print $2}')
-        volLevel=$(pulseaudio-ctl C)
-
-        if [ "$volStatus" == "yes" ]
-                then echo $GREEN " ${volLevel}"
-        elif [ "$volStatus" == "no" ]
-                then echo $RED " ${volLevel}"
-	else echo " ?"
-        fi
-}
-
-function volume_status {
-	echo "V"%{A:dvol:}%{A2:pulseaudio-ctl mute &&volume_status:}%{A5:pulseaudio-ctl down &&volume_status:}%{A4:pulseaudio-ctl up &&volume_status:}$(panel_volicon)%{A}%{A}%{A}%{A}> "$PANEL_FIFO"
-}
-
 #DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb '#99CC99' -sf '#000000''
 #DMENU='dmenu $DMENU_OPTIONS'
 choice=$(echo -e "mute\n100\n70\n50\n30\nsettings" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
 
 case "$choice" in
-  mute) pulseaudio-ctl mute &&volume_status & ;;
-  100) pulseaudio-ctl set 100 &&volume_status & ;;
-  70) pulseaudio-ctl set 70 &&volume_status & ;;
-  50) pulseaudio-ctl set 50 &&volume_status & ;;
-  30) pulseaudio-ctl set 30 &&volume_status & ;;
+  mute) pulseaudio-ctl mute &&volume_status.sh & ;;
+  100) pulseaudio-ctl set 100 &&volume_status.sh & ;;
+  70) pulseaudio-ctl set 70 &&volume_status.sh & ;;
+  50) pulseaudio-ctl set 50 &&volume_status.sh & ;;
+  30) pulseaudio-ctl set 30 &&volume_status.sh & ;;
   settings) smartsplit &&pavucontrol &&volume_status.sh & ;;
 esac
