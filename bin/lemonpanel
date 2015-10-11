@@ -18,6 +18,14 @@ fi
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
+#This function detects right battery and web interface name and makes conky use those
+function conkywrap {
+	bat=$(ls /sys/class/power_supply | grep --color=never 'BAT*')
+	interface=$(awk 'NR>1{print $6}' < /proc/net/arp)
+	sed -i 's/BAT1/'$bat'/g' $HOME/.config/bspwm/panel/conkyrc &
+	sed -i 's/wlp1s0/'$interface'/g' $HOME/.config/bspwm/panel/conkyrc &
+}
+
 export PANEL_FIFO="/tmp/panel-fifo"
 
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
@@ -50,7 +58,7 @@ menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE
 #Collect info for the panel
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
-conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
+conkywrap && conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
 volume_status.sh &
 
 #Format info in orderly fashion
