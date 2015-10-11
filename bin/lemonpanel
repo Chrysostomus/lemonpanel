@@ -18,31 +18,6 @@ fi
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
-#This function detects right battery and web interface name and makes conky use those
-function conkywrap {
-	bat=$(ls /sys/class/power_supply | grep --color=never 'BAT*')
-	interface=$(awk 'NR>1{print $6}' < /proc/net/arp)
-	sed -i 's/BAT1/'$bat'/g' $HOME/.config/bspwm/panel/conkyrc &
-	sed -i 's/wlp1s0/'$interface'/g' $HOME/.config/bspwm/panel/conkyrc &
-}
-
-panel_volicon()
-{
-        volStatus=$(pulseaudio-ctl full-status | awk '{print $2}')
-        volLevel=$(pulseaudio-ctl C)
-
-        if [ "$volStatus" == "yes" ]
-                then echo $GREEN " ${volLevel}"
-        elif [ "$volStatus" == "no" ]
-                then echo $RED " ${volLevel}"
-	else echo " ?"
-        fi
-}
-
-function volume_status {
-	echo "V"%{A:dvol:}%{A2:pulseaudio-ctl mute &&volume_status:}%{A5:pulseaudio-ctl down &&volume_status:}%{A4:pulseaudio-ctl up &&volume_status:}$(panel_volicon)%{A}%{A}%{A}%{A}> "$PANEL_FIFO"
-}
-
 export PANEL_FIFO="/tmp/panel-fifo"
 
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
@@ -75,8 +50,8 @@ menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE
 #Collect info for the panel
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
-conkywrap && conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
-volume_status &
+conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
+volume_status.sh &
 
 #Format info in orderly fashion
 function lemon {
@@ -129,6 +104,6 @@ done
 }
 
 #Actually run the panel
-cat "$PANEL_FIFO" | lemon | lemonbar -p -g x$panel_height -f "$mainfont" -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
+cat "$PANEL_FIFO" | lemon | lemonbar -p -g x$panel_height -f "$mainfont" -f -f '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1' -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
 
 wait
