@@ -3,7 +3,7 @@
 #menu where the pointer is located.
 eval $(xdotool getmouselocation --shell)
 menu_widht=500
-monitor_widht=$(xdpyinfo | awk -F'[ x]+' '/dimensions:/{print $3}')
+monitor_widht=$(wattr w $(lsw -r))
 maxx=$(echo "$monitor_widht - $menu_widht" | bc)
 XP=$(echo "$X - 15" | bc)
 [[ $XP -gt $maxx ]] && XP=$maxx
