@@ -1,2 +1,18 @@
-#!/bin/sh
-pulseaudio-ctl $@; volume_status.sh
+#!/bin/bash
+panel_volicon()
+{
+        volStatus=$(pulseaudio-ctl full-status | awk '{print $2}')
+        volLevel=$(pulseaudio-ctl C)
+
+        if [ "$volStatus" == "yes" ]
+                then echo $GREEN " ${volLevel}"
+        elif [ "$volStatus" == "no" ]
+                then echo $RED " ${volLevel}"
+	else echo " ?"
+        fi
+}
+
+function volume_status {
+	echo "V"%{A:dvol:}%{A2:pulseaudio-ctl mute &&volume_status:}%{A5:pulseaudio-ctl down &&volume_status:}%{A4:pulseaudio-ctl up &&volume_status:}$(panel_volicon)%{A}%{A}%{A}%{A}> "$PANEL_FIFO"
+}
+pulseaudio-ctl $@; volume_status
