@@ -13,6 +13,6 @@ panel_volicon()
 }
 
 function volume_status {
-	echo "V"%{A:dvol:}%{A2:pulseaudio-ctl mute &&volume_status:}%{A5:pulseaudio-ctl down &&volume_status:}%{A4:pulseaudio-ctl up &&volume_status:}$(panel_volicon)%{A}%{A}%{A}%{A}> "$PANEL_FIFO"
+	echo "V"%{A:dvol:}%{A2:pulseaudio-ctl mute &&volume_status.sh:}%{A5:pulseaudio-ctl down &&volume_status.sh:}%{A4:pulseaudio-ctl up &&volume_status.sh:}$(panel_volicon)%{A}%{A}%{A}%{A}> "$PANEL_FIFO"
 }
-pulseaudio-ctl $@; volume_status
+pulseaudio-ctl $@; volume_status.sh
