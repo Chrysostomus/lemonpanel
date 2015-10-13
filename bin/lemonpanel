@@ -104,6 +104,6 @@ done
 }
 
 #Actually run the panel
-cat "$PANEL_FIFO" | lemon | lemonbar -p -g x$panel_height -f "$mainfont" -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
+cat "$PANEL_FIFO" | lemon | lemonbar -p -g x$panel_height -f "$mainfont" -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | while read line; do eval "$line"; done &
 
 wait
