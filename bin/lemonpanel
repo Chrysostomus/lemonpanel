@@ -25,7 +25,7 @@ mkfifo "$PANEL_FIFO"
 
 #Set fonts if unset
 [[  $FONT_FAMILY && ${FONT_FAMILY-x} ]] && mainfont=$FONT_FAMILY || mainfont="-zevv-peep-medium-*-normal--20-175-*-*-c-*-iso8859-15"
-[[  $FONT_FAMILY2 && ${FONT_FAMILY2-x} ]] && powerlinefont=$FONT_FAMILY2 || powerlinefont='dejavu sans mono for Powerline :size=17 :style=regular'
+[[  $FONT_FAMILY2 && ${FONT_FAMILY2-x} ]] && powerlinefont=$FONT_FAMILY2 || powerlinefont='dejavu sans mono for Powerline :size=15 :style=regular'
 [[  $FONT_FAMILY3 && ${FONT_FAMILY3-x} ]] && iconfont=$FONT_FAMILY3 || iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
 #Set height if unset
 [[  $PANEL_HEIGHT && ${PANEL_HEIGHT-x} ]] && panel_height=$PANEL_HEIGHT || panel_height=25
@@ -104,6 +104,6 @@ done
 }
 
 #Actually run the panel
-cat "$PANEL_FIFO" | lemon | lemonbar -p -g x$panel_height -f "$mainfont" -f -f '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1' -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
+cat "$PANEL_FIFO" | lemon | lemonbar -p -g x$panel_height -f "$mainfont" -f "$powerlinefont" -f "$iconfont" -u 2 -F "$BG" -B "$BG" | sh
 
 wait
