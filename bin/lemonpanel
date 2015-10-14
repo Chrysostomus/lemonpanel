@@ -50,7 +50,7 @@ menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE
 #Collect info for the panel
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
-conky -c ~/.config/bspwm/panel/conkyrc > "$PANEL_FIFO" &
+conky -c ~/.config/bspwm/panel/conkyrc-lemonpanel > "$PANEL_FIFO" &
 volume_status.sh &
 
 #Format info in orderly fashion
