@@ -57,9 +57,9 @@ else
 #           System =======================================
 		ReturnToMain     "$0" \
                 Files            "spacefm" \
-                PackageManager   "terminal -e yaourt-gui" \
+                PackageManager   "terminal -e pacli" \
 #                EditMirrorlist	 "terminal -e sudo pacman-mirrors -i" \
-                SystemUpdates    "terminal -e allservers" \
+#                SystemUpdates    "terminal -e allservers" \
 #                DowngradePackage "terminal -e downgrade $(sudo pacman -Qq | dmenu $DMENU_OPTIONS -p "Select package to downgrade")" \
                 Gnome-disks	 "gnome-disks" \
          )
