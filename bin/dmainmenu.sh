@@ -19,7 +19,7 @@ if [ "$1" == "" ]; then
 		Run		  "dmouse"
 		Terminal          "terminal"
 		Files		  "spacefm"
-		Browser           "midori || $BROWSER https://manjaro.github.io/" \
+		Browser           "$BROWSER" \
 		Find		  "finder"
                 Web               "$0 web"
                 System            "$0 system"
@@ -35,7 +35,7 @@ else
         menu=( \
 #           Web ==========================================
 		ReturnToMain       "$0" \
-                Browser            "midori || $BROWSER https://manjaro.github.io/" \
+                Browser            "$BROWSER" \
                 Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
                 Firewall           "zensu gufw" \
