@@ -11,6 +11,9 @@ if ! [ -f "$HOME/.dmenurc" ]; then
 fi
 . $HOME/.dmenurc
 
+[[  $BROWSER && ${BROWSER-x} ]] && browser=$BROWSER || browser='midori'
+[[  $GUI_EDITOR && ${GUI_EDITOR-x} ]] && gui_editor=$GUI_EDITOR || gui_editor='gedit'
+
 if [ "$1" == "" ]; then
     title="Main"
     menu=( \
@@ -19,7 +22,7 @@ if [ "$1" == "" ]; then
 		Run		  "dmouse"
 		Terminal          "terminal"
 		Files		  "spacefm"
-		Browser           "$BROWSER" \
+		Browser           "$browser" \
 		Find		  "finder"
                 Web               "$0 web"
                 System            "$0 system"
@@ -35,7 +38,7 @@ else
         menu=( \
 #           Web ==========================================
 		ReturnToMain       "$0" \
-                Browser            "$BROWSER" \
+                Browser            "$browser" \
                 Wifi-Menu	   "nmcli_dmenu" \
                 Networkmanager     "terminal -e nmtui" \
                 Firewall           "zensu gufw" \
@@ -46,8 +49,8 @@ else
         menu=( \
 #           Tools ========================================
 		ReturnToMain      "$0" \
-                Editor            "$GUI_EDITOR" \
-                RootEditor        "zensu $GUI_EDITOR" \
+                Editor            "$gui_editor" \
+                RootEditor        "zensu $gui_editor" \
                 Gnome-disks	  "gnome-disks" \
          )
     ;;
