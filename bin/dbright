@@ -8,14 +8,15 @@ fi
 
 eval $(xdotool getmouselocation --shell)
 menu_widht=200
-monitor_widht=$(wattr w $(lsw -r))
-monitor_height=$(wattr h $(lsw -r))
+#monitor_width=$(wattr w $(lsw -r))
+#monitor_height=$(wattr h $(lsw -r))
+wattr wh $(lsw -r) | read monitor_width monitor_height 
 lines=14
-menu_height=$(echo "$lines * 23" | bc)
-maxx=$(echo "$monitor_widht - $menu_widht" | bc)
+menu_height=$(("$lines" * 23))
+maxx=$(("$monitor_width - $menu_width"))
 miny=$PANEL_HEIGHT
-maxy=$(echo "$monitor_height - $menu_height" | bc)
-XP=$(echo "$X - 15" | bc)
+maxy=$(("$monitor_height" - "$menu_height"))
+XP=$(("$X" - 15))
 [[ $XP -gt $maxx ]] && XP=$maxx
 YP=$Y
 [[ $YP -lt $miny ]] && YP=$miny
@@ -23,7 +24,7 @@ YP=$Y
 
 #DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb '#99CC99' -sf '#000000''
 #DMENU='dmenu $DMENU_OPTIONS'
-choice=$(echo -e "100\n70\n50\n30\n10" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
+choice=$(echo -e "100\n70\n50\n30\n10" | dmenu -i -l $lines -y $YP -x $XP -w $menu_width -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
 
 case "$choice" in
   100) xbacklight -set 100 & ;;
