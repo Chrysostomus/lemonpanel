@@ -4,7 +4,7 @@
 eval $(xdotool getmouselocation --shell)
 menu_widht=500
 monitor_widht=$(wattr w $(lsw -r))
-maxx=$(echo "$monitor_widht - $menu_widht" | bc)
+maxx=$(("$monitor_widht - $menu_widht"))
 XP=$(echo "$X - 15" | bc)
 [[ $XP -gt $maxx ]] && XP=$maxx
 
