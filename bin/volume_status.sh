@@ -11,5 +11,5 @@ panel_volicon()
 	else echo " ?"
         fi
 }
-
-echo "V"%{A:dvol:}%{A2:volume mute:}%{A5:volume down:}%{A4:volume up:}$(panel_volicon)%{A}%{A}%{A}%{A}> "$PANEL_FIFO"
+[[ -e /tmp/panel-fifo1 ]] && fifo="/tmp/panel-fifo1" || fifo="$PANEL_FIFO"
+echo "V"%{A:dvol:}%{A2:volume mute:}%{A5:volume down:}%{A4:volume up:}$(panel_volicon)%{A}%{A}%{A}%{A}> "$fifo"
