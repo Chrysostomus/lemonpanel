@@ -4,8 +4,8 @@
 eval $(xdotool getmouselocation --shell)
 menu_widht=500
 monitor_widht=$(wattr w $(lsw -r))
-maxx=$(("$monitor_widht - $menu_widht"))
-XP=$(echo "$X - 15" | bc)
+maxx=$(( $monitor_widht - $menu_widht ))
+XP=$(( $X - 15 ))
 [[ $XP -gt $maxx ]] && XP=$maxx
 
 oldx=$(awk '/x =/{print $3}' $HOME/.config/networkmanager-dmenu/config.ini)
