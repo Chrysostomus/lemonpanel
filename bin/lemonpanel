@@ -58,13 +58,13 @@ function lemon {
 while read -r line ; do
 	case $line in
 	S*)
-		sys_infos="${RA}${line#?}"
+		sys_infos="${line#?}"
 	;;
 	C*)
 	        conky_infos="%{F#FF99CC99}${line#?}"
     ;;
 	V*)
-        	volume_infos="${RA}%{F#FF99CC99} ${line#?} "
+        	volume_infos="%{F#FF99CC99} ${line#?} "
     ;;    
 	T*)
 		formatted=$(echo ${line#?} | cut -c1-70)
@@ -99,7 +99,7 @@ while read -r line ; do
 		done
 	;;
 	esac
-	printf "%s\n" "$logo$wm_infos $menu %{c}$title $sys_infos%{F#FF000000}$volume_infos${conky_infos} %{A:dlogoutmenu:}%{A}"
+	printf "%s\n" "$logo$wm_infos $menu %{c}$title %{r}$sys_infos%{F#FF000000}$volume_infos${conky_infos} %{A:dlogoutmenu:}%{A}"
 done
 }
 
