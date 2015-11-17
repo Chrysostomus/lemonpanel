@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 ###
 
 if ! [ -f "$HOME/.dmenurc" ]; then
@@ -16,10 +16,10 @@ maxx=$(( $monitor_widht - $menu_widht ))
 miny=$PANEL_HEIGHT
 maxy=$(( $monitor_height - $menu_height ))
 XP=$(( $X - 15 ))
-[[ $XP -gt $maxx ]] && XP=$maxx
+[ $XP -gt $maxx ] && XP=$maxx
 YP=$Y
-[[ $YP -lt $miny ]] && YP=$miny
-[[ $YP -gt $maxy ]] && YP=$maxy
+[ $YP -lt $miny ] && YP=$miny
+[ $YP -gt $maxy ] && YP=$maxy
 
 #DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb '#99CC99' -sf '#000000''
 #DMENU='dmenu $DMENU_OPTIONS'
