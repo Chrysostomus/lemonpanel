@@ -41,7 +41,7 @@ menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE
 
 #Collect info for the panel
 bspc control --subscribe > "$PANEL_FIFO" &
-xtitle -sf 'T%s' > "$PANEL_FIFO" &
+xtitle -t 80 -sf 'T%s' > "$PANEL_FIFO" &
 conky -c ~/.config/bspwm/panel/conkyrc-lemonpanel > "$PANEL_FIFO" &
 volume_status.sh &
 
@@ -59,7 +59,7 @@ while read -r line ; do
         	volume_infos="%{F#FF99CC99} ${line#?} "
     ;;    
 	T*)
-		formatted=$(echo ${line#?} | cut -c1-70)
+		formatted=$(echo ${line#?})
 		title="${CFR} %{A2:bspc desktop -l next:}${AC}MonocleSwitcher${AB}${formatted}${AE}${AE} "
 	;;
 	W*)
