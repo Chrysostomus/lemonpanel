@@ -1,13 +1,15 @@
 #! /bin/bash
 
 # Kill any panel processes older than us, 
-while [ $(pgrep -cx lemonbar) -gt 1 ] ; do
+while [ $(pgrep -cx lemonpanel) -gt 1 ] ; do
 	pkill -ox -9 lemonpanel
 	killall -9 stalonetray
 	killall -9 xtitle
 	killall -9 conky
 done
-
+if [ $(pgrep -cx lemonbar) -gt 1 ] ; then
+        pkill -n -9 "lemonbar"
+fi
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
 export PANEL_FIFO="/tmp/panel-fifo1"
