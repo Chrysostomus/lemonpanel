@@ -23,7 +23,7 @@ YP=$Y
 
 #DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb '#99CC99' -sf '#000000''
 #DMENU='dmenu $DMENU_OPTIONS'
-choice=$(echo -e "100\n70\n50\n30\n10" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
+choice=$(echo "100\n70\n50\n30\n10" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
 
 case "$choice" in
   100) xbacklight -set 100 & ;;
