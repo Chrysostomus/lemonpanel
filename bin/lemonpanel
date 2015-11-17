@@ -10,7 +10,7 @@ done
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
-export PANEL_FIFO="/tmp/panel-fifo"
+export PANEL_FIFO="/tmp/panel-fifo1"
 
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
