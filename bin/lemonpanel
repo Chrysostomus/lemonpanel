@@ -8,7 +8,7 @@ while [ $(pgrep -cx lemonpanel) -gt 1 -o $(pgrep -cx lemonbar) -gt 1 ] ; do
 	killall -9 xtitle
 	killall -9 conky
 done
-trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+#trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
 export PANEL_FIFO="/tmp/panel-fifo1"
 
