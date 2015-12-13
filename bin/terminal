@@ -1,5 +1,12 @@
 #!/bin/sh
-export SHELL=/usr/bin/zsh
+if which tmux >/dev/null 2>&1; then
+  export SHELL=/usr/bin/tmux
+elif which fish >/dev/null 2>&1; then
+  export SHELL=/usr/bin/fish
+elif which zsh >/dev/null 2>&1; then
+  export SHELL=/usr/bin/zsh
+fi
+
 urxvtc $@
 if [ $? -eq 2 ]; then
   urxvtd -q -o -f
