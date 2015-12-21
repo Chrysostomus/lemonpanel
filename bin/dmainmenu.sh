@@ -62,9 +62,6 @@ else
                 Files            "spacefm" \
                 PackageManager   "terminal -e pacli" \
                 SystemMenu       "terminal -e bmenu" \
-                Mhwd-tui	 "terminal -e mhwd-tui" \
-#                SystemUpdates    "terminal -e allservers" \
-#                DowngradePackage "terminal -e downgrade $(sudo pacman -Qq | dmenu $DMENU_OPTIONS -p "Select package to downgrade")" \
                 Gnome-disks	 "gnome-disks" \
          )
     ;;
