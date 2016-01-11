@@ -8,29 +8,35 @@ while [ $(pgrep -cx lemonpanel) -gt 1 -o $(pgrep -cx lemonbar) -gt 1 ] ; do
 	killall -9 xtitle
 	killall -9 conky
 done
-#trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+#Create a configuration file if it is missing
+if ! [ -f "$HOME/.lemonpanelrc" ]; then
+	cat > $HOME/.lemonpanelrc <<EOL
+panel_height='25'
+mainfont="-zevv-peep-medium-*-normal--20-175-*-*-c-*-iso8859-15"
+powerlinefont='dejavu sans mono for Powerline :size=15 :style=regular'
+iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
+gap=15
+# From panel_colors file 
+CB1='%{B#FF99CC99}'
+CB2='%{B#FF4E4E4E}'
+CF1='%{F#FF000000}'
+CF2='%{F#FF99CC99}'
+CF3='%{F#FFD75F5F}'
+CF4='%{F#FF4E4E4E}'
+EOL
+fi
+#Source the configuration file
+. $HOME/.lemonpanelrc
 
 export PANEL_FIFO="/tmp/panel-fifo1"
 
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
-#Set fonts if unset
-mainfont="-zevv-peep-medium-*-normal--20-175-*-*-c-*-iso8859-15"
-powerlinefont='dejavu sans mono for Powerline :size=15 :style=regular'
-iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
-#Set height if unset
-panel_height=25
-
 #Set aliases and variables
 CBR='%{B-}'
-CB1='%{B#FF99CC99}'
-CB2='%{B#FF4E4E4E}'
 CFR='%{F-}'
-CF1='%{F#FF000000}'
-CF2='%{F#FF99CC99}'
-CF3='%{F#FFD75F5F}'
-CF4='%{F#FF4E4E4E}'
 LA='%{l}'
 RA='%{r}'
 AC='%{A:'
