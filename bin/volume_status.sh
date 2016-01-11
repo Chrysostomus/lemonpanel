@@ -11,4 +11,4 @@ panel_volicon()
 	else echo " ?"
         fi
 }
-echo "V"%{A:dvol:}%{A2:volume mute:}%{A5:volume down:}%{A4:volume up:}$(panel_volicon)%{A}%{A}%{A}%{A}> "/tmp/panel-fifo1"
+echo "V"%{A:dvol:}%{A2:volume mute:}%{A5:volume down 1:}%{A4:volume up 1:}$(panel_volicon)%{A}%{A}%{A}%{A}> "/tmp/panel-fifo1"
