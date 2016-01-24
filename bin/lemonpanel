@@ -46,7 +46,7 @@ logo="${CFR}${CF1}${CB1}${AC}dmainmenu.sh&disown${AB} ${AE}"
 menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE}${CF2}%{B#FF000000}%{B#FF000000}${CF4}" 
 
 #Collect info for the panel
-bspc control --subscribe > "$PANEL_FIFO" &
+bspc subscribe > "$PANEL_FIFO" &
 xtitle -t 80 -sf 'T%s' > "$PANEL_FIFO" &
 conky -c ~/.config/bspwm/panel/conkyrc-lemonpanel > "$PANEL_FIFO" &
 volume_status.sh &
