@@ -12,6 +12,7 @@ fi
 . $HOME/.dmenurc
 
 [[  $BROWSER && ${BROWSER-x} ]] && browser=$BROWSER || browser='midori'
+[[  $TERMINAL && ${BROWSER-x} ]] && terminal=$TERMINAL || terminal='terminal'
 [[  $GUI_EDITOR && ${GUI_EDITOR-x} ]] && gui_editor=$GUI_EDITOR || gui_editor='gedit'
 
 if [ "$1" == "" ]; then
@@ -20,7 +21,7 @@ if [ "$1" == "" ]; then
 #               labels            commands
 #           Main =========================================
 		Run		  "dmouse"
-		Terminal          "terminal"
+		Terminal          "$terminal"
 		Files		  "spacefm"
 		Browser           "$browser" \
 		Find		  "finder"
@@ -28,8 +29,8 @@ if [ "$1" == "" ]; then
                 System            "$0 system"
                 Tools             "$0 tools"
                 Settings          "$0 settings"
-		Keybindings	  "terminal -name 'floaterm' -geometry 81x65 -e keybindings.sh"
-                Manual		  "terminal -e postinstall"
+		Keybindings	  "$terminal -name 'floaterm' -geometry 81x65 -e keybindings.sh"
+                Manual		  "$terminal -e postinstall"
     )
 else
     case $1 in
@@ -40,7 +41,7 @@ else
 		ReturnToMain       "$0" \
                 Browser            "$browser" \
                 Wifi-Menu	   "nmcli_dmenu" \
-                Networkmanager     "terminal -e nmtui" \
+                Networkmanager     "$terminal -e nmtui" \
                 Firewall           "zensu gufw" \
          )
     ;;
@@ -60,8 +61,8 @@ else
 #           System =======================================
 		ReturnToMain     "$0" \
                 Files            "spacefm" \
-                PackageManager   "terminal -e pacli" \
-                SystemMenu       "terminal -e bmenu" \
+                PackageManager   "$terminal -e pacli" \
+                SystemMenu       "$terminal -e bmenu" \
                 Gnome-disks	 "gnome-disks" \
          )
     ;;
@@ -77,9 +78,9 @@ else
                 Bspwmrc                  "xdg-open .config/bspwm/bspwmrc" \
                 Keybindings	         "xdg-open .config/sxhkd/sxhkdrc" \
                 Dmenurc			 "xdg-open .dmenurc" \
-                Logind		         "terminal -e sudo nano /etc/systemd/logind.conf" \
+                Logind		         "$terminal -e sudo nano /etc/systemd/logind.conf" \
                 Appearance	         "lxappearance" \
-                Postinstall	         "terminal -e postinstall" \
+                Postinstall	         "$terminal -e postinstall" \
                 Autostart	         "xdg-open .config/bspwm/autostart" \
                 Xresources	         "xdg-open .Xresources" \
                 Zshrc		         "xdg-open .zshrc" \
