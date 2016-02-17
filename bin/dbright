@@ -7,7 +7,7 @@ fi
 . $HOME/.dmenurc
 
 eval $(xdotool getmouselocation --shell)
-menu_widht=200
+menu_widht=50
 monitor_widht=$(wattr w $(lsw -r))
 monitor_height=$(wattr h $(lsw -r))
 lines=14
