@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 panel_volicon()
 {
         volStatus=$(pulseaudio-ctl full-status | awk '{print $2}')
