@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/dash
 
 # Kill any panel processes older than us, 
 while [ $(pgrep -cx lemonpanel) -gt 1 -o $(pgrep -cx lemonbar) -gt 1 ] ; do
@@ -24,8 +24,10 @@ CF1='%{F#FF000000}'
 CF2='%{F#FF99CC99}'
 CF3='%{F#FFD75F5F}'
 CF4='%{F#FF4E4E4E}'
+update_interval=3
 EOL
 fi
+grep -q update_interval $HOME/.lemonpanelrc || echo 'update_interval="3"' >> $HOME/.lemonpanelrc
 #Source the configuration file
 . $HOME/.lemonpanelrc
 
@@ -44,15 +46,77 @@ AB=':}'
 AE='%{A}'
 logo="${CFR}${CF1}${CB1}${AC}dmainmenu.sh&disown${AB} ${AE}"
 menu="${CF1}${AC}BspwmDesktopMenu${AB}${AE}${AC}BspwmWindowMenu${AB}  ${AE}${CF2}%{B#FF000000}%{B#FF000000}${CF4}" 
+RED="%{F#FFA54242}"
+DARKGREY="%{F#FF707880}"
+interface_up=$(ip link show | awk '/state UP/ {print substr($2, 1, length($2)-1)}')
+is_wifi()
+{
+	iwconfig $interface_up >/dev/null 2>&1
+}
+net_indicator()
+{
+if $(ip link show | grep -q "state UP"); then
+	if ! is_wifi;
+	then
+        echo $CF2" "  
+  else
+        echo $CF2" "
+  fi
+else
+	echo $DARKGREY" "$CF2
+fi
+}
+
+battery() {
+    BATC=$(cat /sys/class/power_supply/BAT1/capacity)
+    BATS=$(cat /sys/class/power_supply/BAT1/status)
+	if [ $BATS == "Charging" ] 2> /dev/null; then
+		echo " $BATC%"
+	else 
+		case $BATC in
+		100|[7-9]*) echo " $BATC%"
+			
+			;;
+		[4-6]*) echo " $BATC%"
+			
+			;;
+		*) echo "$RED $BATC%$CF2"
+			
+			;;
+		esac
+	fi
+}
+
+clock() {
+    date '+%H:%M'
+}
+
+status()
+{
+if [ -e /sys/class/power_supply/BAT1/ ]; then
+	while	:; do
+	echo "C%{A:networkmenuplacer.sh ; nmcli_dmenu:}$(net_indicator)%{A}%{A:dbright:}$(battery)%{A}  $(clock)"
+	sleep $update_interval
+done	
+else
+	while	:; do
+	echo "C%{A:networkmenuplacer.sh ; nmcli_dmenu:}$(net_indicator)%{A}  $(clock)"
+	sleep $update_interval
+done
+fi
+
+}
 
 #Collect info for the panel
 bspc subscribe > "$PANEL_FIFO" &
 xtitle -t 80 -sf 'T%s' > "$PANEL_FIFO" &
-conky -c ~/.config/bspwm/panel/conkyrc-lemonpanel > "$PANEL_FIFO" &
+#conky -c ~/.config/bspwm/panel/conkyrc-lemonpanel > "$PANEL_FIFO" &
+status > "$PANEL_FIFO" &
 volume_status.sh &
 
+
 #Format info in orderly fashion
-function lemon {
+lemon() {
 while read -r line ; do
 	case $line in
 	S*)
