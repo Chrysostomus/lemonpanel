@@ -70,7 +70,7 @@ fi
 battery() {
     BATC=$(cat /sys/class/power_supply/BAT1/capacity)
     BATS=$(cat /sys/class/power_supply/BAT1/status)
-	if [ $BATS == "Charging" ] 2> /dev/null; then
+	if [ "$BATS" = "Charging" ]; then
 		echo " $BATC%"
 	else 
 		case $BATC in
