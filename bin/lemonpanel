@@ -9,6 +9,8 @@ while [ $(pgrep -cx lemonpanel) -gt 1 -o $(pgrep -cx lemonbar) -gt 1 ] ; do
 	killall -9 conky
 done
 
+trap 'rm /tmp/panel-fifo1' INT TERM QUIT EXIT
+
 #Create a configuration file if it is missing
 if ! [ -f "$HOME/.lemonpanelrc" ]; then
 	cat > $HOME/.lemonpanelrc <<EOL
