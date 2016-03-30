@@ -16,7 +16,7 @@ if ! [ -f "$HOME/.lemonpanelrc" ]; then
 	cat > $HOME/.lemonpanelrc <<EOL
 panel_height='25'
 mainfont="-zevv-peep-medium-*-normal--20-175-*-*-c-*-iso8859-15"
-powerlinefont='dejavu sans mono for Powerline :size=15 :style=regular'
+powerlinefont='dejavu sans mono for Powerline:size=15:style=regular'
 iconfont="-*-ionicons-medium-r-normal-*-25-*-*-*-p-*-*-1"
 gap=15
 # From panel_colors file 
