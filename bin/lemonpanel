@@ -71,8 +71,8 @@ fi
 }
 
 battery() {
-    BATC=$(cat /sys/class/power_supply/BAT1/capacity)
-    BATS=$(cat /sys/class/power_supply/BAT1/status)
+    BATC=$(cat /sys/class/power_supply/BAT*/capacity)
+    BATS=$(cat /sys/class/power_supply/BAT*/status)
 	if [ "$BATS" = "Charging" ]; then
 		echo " $BATC%"
 	else 
