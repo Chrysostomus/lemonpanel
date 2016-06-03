@@ -36,7 +36,7 @@ case "$choice" in
 	if [ $(pgrep pulseaudio >/dev/null) ]; then
 		smartsplit &&pavucontrol &&volume_status.sh & 
 	else
-		smartsplit && terminal -e alsamixer &&volume_status.sh &
+		smartsplit && default-terminal -e alsamixer &&volume_status.sh &
 	fi
   ;;
 esac
