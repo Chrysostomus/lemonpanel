@@ -103,7 +103,7 @@ if [ -e /sys/class/power_supply/BAT1/ ]; then
 done	
 else
 	while	:; do
-	echo "C%{A:networkmenuplacer.sh ; nmcli_dmenu:}$(net_indicator)%{A}  $(clock)"
+	echo "C%{A:networkmenu.sh:}$(net_indicator)%{A}  $(clock)"
 	sleep $update_interval
 done
 fi
