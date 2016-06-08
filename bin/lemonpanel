@@ -96,7 +96,7 @@ clock() {
 
 status()
 {
-if [ -e /sys/class/power_supply/BAT1/ ]; then
+if [ -e /sys/class/power_supply/BAT*/ ]; then
 	while	:; do
 	echo "C%{A:networkmenu.sh:}$(net_indicator)%{A}%{A:dbright:}$(battery)%{A}  $(clock)"
 	sleep $update_interval
