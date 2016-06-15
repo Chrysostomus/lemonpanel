@@ -10,7 +10,7 @@ if systemctl status systemd-networkd.service | grep -q " active"; then
 		smartsplit ; default-terminal --geometry=450x200 -e wpa_tui	
 	fi
 	 
-elif  systemctl status Networkmanager.service | grep -q " active"; then
+elif  systemctl status NetworkManager.service | grep -q " active"; then
 		if which nmcli_dmenu >/dev/null 2>&1 ; then
 			networkmenuplacer.sh ; nmcli_dmenu
 		else 
