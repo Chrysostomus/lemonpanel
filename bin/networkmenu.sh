@@ -1,13 +1,13 @@
 #!/bin/bash
 
 . ~/.profile
-[[ $TERMINAL == /usr/bin/roxterm ]] && bspc rule -a Roxterm state=pseudo_tiled -o
 
 if systemctl status systemd-networkd.service | grep -q " active"; then
 	if which wpa_gui >/dev/null 2>&1 ; then 
 		wpa_gui
 	else
-		smartsplit ; default-terminal --geometry=450x200 -e wpa_tui	
+		[[ $TERMINAL == /usr/bin/roxterm ]] && bspc rule -a Roxterm state=pseudo_tiled -o
+		smartsplit ; default-terminal --geometry=400x200 -e wpa_tui	
 	fi
 	 
 elif  systemctl status NetworkManager.service | grep -q " active"; then
@@ -17,5 +17,6 @@ elif  systemctl status NetworkManager.service | grep -q " active"; then
 			smartsplit ; default-terminal -e nmtui
 		fi
 else
-	smartsplit ; default-terminal --geometry=450x200 -e wpa_tui
+	[[ $TERMINAL == /usr/bin/roxterm ]] && bspc rule -a Roxterm state=pseudo_tiled -o
+	smartsplit ; default-terminal --geometry=400x200 -e wpa_tui
 fi
