@@ -112,7 +112,7 @@ fi
 
 #Collect info for the panel
 sleep 1 && bspc subscribe > "$PANEL_FIFO" &
-xtitle -t 80 -sf 'T%s' > "$PANEL_FIFO" &
+xtitle -t 60 -sf 'T%s\n' > "$PANEL_FIFO" &
 #conky -c ~/.config/bspwm/panel/conkyrc-lemonpanel > "$PANEL_FIFO" &
 status > "$PANEL_FIFO" &
 volume_status.sh &
