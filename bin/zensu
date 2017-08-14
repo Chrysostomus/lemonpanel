@@ -1,4 +1,0 @@
-#!/bin/bash
-#Authentication dialog to run applications with root priviledges, using zenity.
-PASSWD="$(zenity --password --title =Authentication)\n"
-echo -e $PASSWD | sudo -S $@
