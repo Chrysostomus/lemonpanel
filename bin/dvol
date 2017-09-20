@@ -7,36 +7,40 @@ if ! [ -f "$HOME/.dmenurc" ]; then
 fi
 . $HOME/.dmenurc
 
-eval $(xdotool getmouselocation --shell)
-menu_widht=100
-monitor_widht=$(wattr w $(lsw -r))
-monitor_height=$(wattr h $(lsw -r))
-lines=14
-menu_height=$(( $lines * 23 ))
-maxx=$(( $monitor_widht - $menu_widht ))
-miny=$PANEL_HEIGHT
-maxy=$(( $monitor_height - $menu_height ))
-XP=$(( $X - 15 ))
-[ $XP -gt $maxx ] && XP=$maxx
-YP=$Y
-[ $YP -lt $miny ] && YP=$miny
-[ $YP -gt $maxy ] && YP=$maxy
+if $(pgrep dvol > /dev/null); then
+	eval $(xdotool getmouselocation --shell)
+	menu_widht=100
+	monitor_widht=$(wattr w $(lsw -r))
+	monitor_height=$(wattr h $(lsw -r))
+	lines=14
+	menu_height=$(( $lines * 23 ))
+	maxx=$(( $monitor_widht - $menu_widht ))
+	miny=$PANEL_HEIGHT
+	maxy=$(( $monitor_height - $menu_height ))
+	XP=$(( $X - 15 ))
+	[ $XP -gt $maxx ] && XP=$maxx
+	YP=$Y
+	[ $YP -lt $miny ] && YP=$miny
+	[ $YP -gt $maxy ] && YP=$maxy
 
-#DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb '#99CC99' -sf '#000000''
-#DMENU='dmenu $DMENU_OPTIONS'
-choice=$(printf "mute\n100\n70\n50\n30\nsettings" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
+	#DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb 	'#99CC99' -sf '#000000''
+	#DMENU='dmenu $DMENU_OPTIONS'
+	choice=$(printf "mute\n100\n70\n50\n30\nsettings" | dmenu -i -l $lines -y $YP -x $XP -w 	$menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
 
-case "$choice" in
-  mute) volume mute & ;;
-  100) volume set 100 & ;;
-  70) volume set 70 & ;;
-  50) volume set 50 & ;;
-  30) volume set 30 & ;;
-  settings) 
-	if [ $(pgrep pulseaudio >/dev/null) ]; then
-		smartsplit &&pavucontrol &&volume_status.sh & 
-	else
-		smartsplit && default-terminal -e alsamixer &&volume_status.sh &
-	fi
-  ;;
-esac
+	case "$choice" in
+	  mute) volume mute & ;;
+	  100) volume set 100 & ;;
+	  70) volume set 70 & ;;
+	  50) volume set 50 & ;;
+	  30) volume set 30 & ;;
+	  settings) 
+		if [ $(pgrep pulseaudio >/dev/null) ]; then
+			smartsplit &&pavucontrol &&volume_status.sh & 
+		else
+			smartsplit && default-terminal -e alsamixer &&volume_status.sh &
+		fi
+	  ;;
+	esac
+else
+	echo "dvol is already running"
+fi
