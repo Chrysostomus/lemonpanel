@@ -13,6 +13,8 @@ if systemctl status systemd-networkd.service | grep -q " active"; then
 elif  systemctl status NetworkManager.service | grep -q " active"; then
 		if which nmcli_dmenu >/dev/null 2>&1 ; then
 			networkmenuplacer.sh ; nmcli_dmenu
+		elif which networkmanager_dmenu >/dev/null 2>&1 ; then
+			networkmenuplacer.sh ; networkmanager_dmenu
 		else 
 			smartsplit ; default-terminal -e nmtui
 		fi
