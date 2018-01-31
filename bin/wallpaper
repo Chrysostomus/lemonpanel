@@ -5,8 +5,8 @@ if ! [ -f "$HOME/.dmenurc" ]; then
 fi
 . $HOME/.dmenurc
 
-DMENU="dmenu $DMENU_OPTIONS -l 10 -w 800 -y $PANEL_HEIGHT"
-
+#DMENU="dmenu $DMENU_OPTIONS -l 10 -w 800 -y $PANEL_HEIGHT"
+DMENU="rofi -dmenu"
 WALLPAPER_DIR="/usr/share/backgrounds"
 WALLPAPER=`ls $WALLPAPER_DIR \
 	| $DMENU -p "Choose a Wallpaper :"`
