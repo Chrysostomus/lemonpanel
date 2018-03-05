@@ -1,16 +1,24 @@
 #!/bin/sh
 
-if ! [ -f "$HOME/.dmenurc" ]; then
-	cp /usr/share/dmenu/dmenurc $HOME/.dmenurc
-fi
-. $HOME/.dmenurc
-
-DMENU="dmenu $DMENU_OPTIONS -l 10 -w 800 -y $PANEL_HEIGHT"
-
+if ! [ -f "$HOME/.fehrc" ]; then	
+echo -e 'FEH="feh --bg-scale"
 WALLPAPER_DIR="/usr/share/backgrounds"
-WALLPAPER=`ls $WALLPAPER_DIR \
-	| $DMENU -p "Choose a Wallpaper :"`
+floating=0' > $HOME/.fehrc
+fi
+. $HOME/.fehrc
 
-FEH="feh --bg-scale"
+desktop_state=$(bspc wm -g | grep -o "L.")
 
-$FEH $WALLPAPER_DIR/$WALLPAPER
+if [ "$floating" -eq 0 ]; then 
+	if [ "$desktop_state" = LT ]; then 
+		bspc desktop -l next
+		#$FEH $WALLPAPER_DIR/$WALLPAPER
+		default-terminal ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+		bspc desktop -l next
+	else
+		default-terminal ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+	fi
+else
+	bspc rule -a floaterm state=floating center=true
+	st -c floaterm ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+fi
