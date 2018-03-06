@@ -1,13 +1,15 @@
 #!/bin/dash
+. ~/.limepanelrc
+
 panel_volicon()
 {
         volStatus=$(pulseaudio-ctl full-status | awk '{print $2}')
         volLevel=$(pulseaudio-ctl C)
 
         if [ "$volStatus" = "yes" ]
-                then echo " ${volLevel}"
+                then echo "$muted_icon ${volLevel}"
         elif [ "$volStatus" = "no" ]
-                then echo " ${volLevel}"
+                then echo "$unmuted_icon ${volLevel}"
 		else echo " ?"
         fi
 }
@@ -18,9 +20,9 @@ panel_avolicon()
         avolLevel=$(avol level)
 
         if [ "$avolStatus" = "off" ]
-                then echo " ${avolLevel}"
+                then echo "$muted_icon ${avolLevel}"
         elif [ "$avolStatus" = "on" ]
-                then echo " ${avolLevel}"
+                then echo "$unmuted_icon ${avolLevel}"
 		else echo " ?"
         fi
 }
