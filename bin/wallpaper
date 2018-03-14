@@ -16,7 +16,7 @@ if [ "$floating" -eq 0 ]; then
 		default-terminal ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
 		bspc desktop -l next
 	else
-		default-terminal ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+		st ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
 	fi
 else
 	bspc rule -a floaterm state=floating center=true
