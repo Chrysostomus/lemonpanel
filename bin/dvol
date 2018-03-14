@@ -23,9 +23,10 @@ if $(pgrep dvol > /dev/null); then
 	[ $YP -lt $miny ] && YP=$miny
 	[ $YP -gt $maxy ] && YP=$maxy
 
+	
 	#DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb 	'#99CC99' -sf '#000000''
 	#DMENU='dmenu $DMENU_OPTIONS'
-	choice=$(printf "mute\n100\n70\n50\n30\nsettings" | dmenu -i -l $lines -y $YP -x $XP -w 	$menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
+	choice=$(printf "mute\n100\n70\n50\n30\nsettings" | rofi -config "~/.config/rofi/config-monocle.rasi" -theme-str "#window { location: northwest; border: 0; width: 140; x-offset: ${XP}px;}" -dmenu -p "Volume")
 
 	case "$choice" in
 	  mute) volume mute & ;;
