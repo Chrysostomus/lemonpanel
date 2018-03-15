@@ -23,12 +23,12 @@ YP=$Y
 
 #DMENU='dmenu -i -l 5 -y 30 -x 1720 -w 200 -fn sans11 -nb '#000000' -nf '#99CC99' -sb '#99CC99' -sf '#000000''
 #DMENU='dmenu $DMENU_OPTIONS'
-choice=$(printf "100\n70\n50\n30\n10" | dmenu -i -l $lines -y $YP -x $XP -w $menu_widht -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB)
+choice=$(printf "100\n70\n50\n30\n10" | rofi -config "~/.config/rofi/config-monocle.rasi" -theme-str "#window { location: northwest; border: 0; width: 60; x-offset: ${XP}px;}" -dmenu -p "")
 
 case "$choice" in
-  100) xbacklight -set 100 & ;;
-  70) xbacklight -set 70 & ;;
-  50) xbacklight -set 50 & ;;
-  30) xbacklight -set 30 & ;;
-  10) xbacklight -set 10 & ;;
+  100) light -S 100 & ;;
+  70) light -S 70 & ;;
+  50) light -S 50 & ;;
+  30) light -S 30 & ;;
+  10) light -S 10 & ;;
 esac
