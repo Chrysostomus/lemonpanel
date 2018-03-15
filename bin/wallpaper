@@ -13,7 +13,7 @@ if [ "$floating" -eq 0 ]; then
 	if [ "$desktop_state" = LT ]; then 
 		bspc desktop -l next
 		#$FEH $WALLPAPER_DIR/$WALLPAPER
-		default-terminal ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+		st ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
 		bspc desktop -l next
 	else
 		st ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
