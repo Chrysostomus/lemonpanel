@@ -1,5 +1,5 @@
 configuration {
-    modi: 				"windowcd";
+    modi: 				"drun";
     me-select-entry:	"MouseSecondary";
     me-accept-entry:	"MousePrimary";
     scroll-method:      1;
@@ -28,10 +28,11 @@ configuration {
     spacing:                     0px;
 }
 window {
-    location:         south;
-    width:            100%;
+    location:         northwest;
+    width:            200px;
     background-color: @background;
     padding:          4px;
+    y-offset:		  25px;
 }
 listview {
     lines:        17;
