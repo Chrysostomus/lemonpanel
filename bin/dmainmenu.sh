@@ -1,138 +1,169 @@
 #!/bin/bash
-
-#       Custom dmenu-bind.sh
 #
-#       Copyright 2009, Gatti Paolo (lordkrandel at gmail dot com)
-#       Distributed as public domain. 
-#       Modified for lemonbar.
+# rofimenu
+#
+# Script that runs rofi in several custom rofi modi, emulating menu with submenus.
+# Only one option should be used.
+# No options or option "-show" starts rofi showing the first modi.
+# Option "-show <modi>" starts rofi showing this <modi>. The rest of command line is passed to rofi.
+# Option "-menu <menu>" calls menu function <menu> and prints menu labels from each line.
+# It is used to define custom modi.
+# Option "-menu <menu> <label>" calls menu function <menu> and executes command from line with <label>.
 
-if ! [ -f "$HOME/.dmenurc" ]; then
-        cp /usr/share/dmenu/dmenurc $HOME/.dmenurc
-fi
-. $HOME/.dmenurc
+# Top level menu consists of modi names from modilist.
+# Modilist is a comma separated list of default modi (drun,run...) and/or custom modi.
+# Names of default modi can be set as rofi options (e.g. -display-drun Applications).
+# Custom modi format: "modi_name:modi_script".
+# Menu functions from this script can be used as modi like this "<menu_name>:$thisscript -menu <menu_function>"
 
-[[  $BROWSER && ${BROWSER-x} ]] && browser=$BROWSER || browser='midori'
-[[  $TERMINAL && ${BROWSER-x} ]] && terminal=$TERMINAL || terminal='terminal'
-[[  $GUI_EDITOR && ${GUI_EDITOR-x} ]] && gui_editor=$GUI_EDITOR || gui_editor='gedit'
+thisscript="$0"
 
-if [ "$1" == "" ]; then
-    title="Main"
-    menu=( \
-#               labels            commands
-#           Main =========================================
-		Run		  "dmouse"
-		Terminal          "$terminal"
-		Files		  "spacefm"
-		Browser           "$browser" \
-		Find		  "finder"
-                Web               "$0 web"
-                System            "$0 system"
-                Tools             "$0 tools"
-                Settings          "$0 settings"
-		Keybindings	  "$terminal -name 'floaterm' -geometry 81x65 -e keybindings.sh"
-                Manual		  "$terminal -e postinstall"
-    )
+# define modi labels for menu
+
+FAV=" Favourites"
+DRUN=" Applications"
+CAT=" Categories"
+RUN=" Run"
+EXIT=" Exit"
+
+modilist="\
+$FAV:$thisscript -menu ${FAV#* },\
+drun,\
+$CAT:$thisscript -menu ${CAT#* },\
+run,\
+$EXIT:$thisscript -menu ${EXIT#* }"
+
+# Menu functions print lines in format "label:command".
+
+Favourites() {
+	echo " Edit this menu:$GUI_EDITOR $thisscript"
+	echo " Terminal:default-terminal"
+	echo " File Manager:default-terminal -e ranger"
+	echo " Browser:default-browser"
+	echo " Settings:default-terminal -e bmenu"
+	echo " Search:rofi-finder.sh"
+	echo " Exit:$thisscript -show \'$EXIT\'"		# This refers to modi from the same script
+}
+
+Categories() {
+	IFS='
+'
+	# Newline separated list, each line has format "[symbol ][alias:]category"
+	# Category with alias will be shown in menu under that alias
+	desired="\
+	 Favorites
+	 Accessories:Utility
+	 Development
+	 Documentation
+	 Education
+	 Graphics
+	 Internet:Network
+	 Multimedia:AudioVideo
+	 Office
+	 Settings
+	 System"
+
+	present="$(grep Categories /usr/share/applications/*.desktop \
+		| cut -d'=' -f2 \
+		| sed 's/;/\n/g' \
+		| LC_COLLATE=POSIX sort --ignore-case --unique)"
+
+	for line in $desired ; do
+		category="${line##*[ :]}"
+		label="${line%:*}"
+		if [ $(echo "$present"|grep -w -c "$category") -gt 0 ] ; then
+			echo "$label:activate_category $category"
+		fi
+	done
+}
+
+activate_category() {	# shows drun modi filtered with category. If no command selected, returns to categories modi
+	category=$1
+	command=$($thisscript \
+		-show drun \
+		-drun-match-fields categories,name \
+		-filter "$category " \
+		-run-command "echo {cmd}")
+	if [ -n "$command" ] ; then
+		eval "$command" &
+		exit
+	fi
+	$thisscript\
+		-show "$CAT"
+	#TODO set selection to that category (if possible with rofi not in dmenu mode)
+}
+
+Exit() {
+	echo " lock:screenlock"
+	echo " suspend:systemctl suspend"
+	echo " hibernate:systemctl hibernate"
+	echo " logout:xdotool key --clearmodifiers super+shift+q"
+	echo " reboot:systemctl reboot"
+	echo " poweroff:systemctl poweroff"
+}
+
+###############################
+##  MAIN SCRIPT STARTS HERE  ##
+###############################
+
+if [ $# -gt 0 ] ; then
+	option="$1"
+	shift
 else
-    case $1 in
-    web)
-        title="web"
-        menu=( \
-#           Web ==========================================
-		ReturnToMain       "$0" \
-                Browser            "$browser" \
-                Wifi-Menu	   "nmcli_dmenu" \
-                Networkmanager     "$terminal -e nmtui" \
-                Firewall           "zensu gufw" \
-         )
-    ;;
-    tools)
-        title="tools"
-        menu=( \
-#           Tools ========================================
-		ReturnToMain      "$0" \
-                Editor            "$gui_editor" \
-                RootEditor        "zensu $gui_editor" \
-                Gnome-disks	  "gnome-disks" \
-         )
-    ;;
-    system)
-        title="system"
-        menu=( \
-#           System =======================================
-		ReturnToMain     "$0" \
-                Files            "spacefm" \
-                PackageManager   "$terminal -e pacli" \
-                SystemMenu       "$terminal -e bmenu" \
-                Gnome-disks	 "gnome-disks" \
-         )
-    ;;
-    settings)
-        title="settings"
-        menu=( \
-#           Settings =====================================
-		ReturnToMain             "$0" \
-#                Volume            	 "$0 volume" \
-                Brightness		 "dbright" \
-                Wallpaper	         "wallpaper" \
-                Menusettings             "zensu xdg-open $0" \
-                Bspwmrc                  "xdg-open .config/bspwm/bspwmrc" \
-                Keybindings	         "xdg-open .config/sxhkd/sxhkdrc" \
-                Dmenurc			 "xdg-open .dmenurc" \
-                Logind		         "$terminal -e sudo nano /etc/systemd/logind.conf" \
-                Appearance	         "lxappearance" \
-                Postinstall	         "$terminal -e postinstall" \
-                Autostart	         "xdg-open .config/bspwm/autostart" \
-                Xresources	         "xdg-open .Xresources" \
-                Zshrc		         "xdg-open .zshrc" \
-                Bashrc		         "xdg-open .bashrc" \
-                ToggleCompositing	 "xdotool key ctrl+super+space" \
-				
-         )
-    ;;
-    volume)
-        title="Volume"
-        menu=( \
-#           Volume controls ==============================
-		ReturnToMain      "$0" \
-		mute		  "volume mute" \
-                0%                "volume set 0" \
-                30%               "volume set 30" \
-                50%               "volume set 50" \
-                70%               "volume set 70" \
-                100%              "volume set 100" \
-                Pavucontrol       "pavucontrol" \
-         )
-    ;;
-    
-    esac
+	option="-show"
 fi
 
-for (( count = 0 ; count < ${#menu[*]}; count++ )); do
+case "$option" in
 
-#   build two arrays, one for labels, the other for commands
-    temp=${menu[$count]}
-    if (( $count < ${#menu[*]}-2 )); then
-        temp+="\n"
-    fi
-    if (( "$count" % 2 == "0" )); then
-        menu_labels+=$temp
-    else
-        menu_commands+=$temp
-    fi
+	##############################
+	# no options or option "-show"
+	"-show")
+		# pause needed when calling the script from itself
+		# so that rofi has time to close and reopen
+		sleep 0.01; 
+		if [ $# -gt 0 ] ; then
+			showmodi="$1"
+			shift
+		else
+			showmodi="${modilist%%,*}"	# first modi from list
+			showmodi="${showmodi%%:*}"	# modi name if modi is custom
+		fi
 
-done
+		#TODO determine element length and modi lenght
+		
+		rofi	-modi "$modilist" \
+				-show "$showmodi" \
+				-config "~/.config/rofi/rofimenu.rasi" \
+				-display-drun "$DRUN" \
+				-display-run "$RUN" \
+				"$@"			# the rest of command line is passed to rofi
+				;;
 
-select=`echo -e $menu_labels | dmenu -p $title -fn $DMENU_FN -nb $DMENU_NB -nf $DMENU_NF -sf $DMENU_SF -sb $DMENU_SB -l 20 -y $PANEL_HEIGHT -w 400`
+	###################################
+	# option "-menu" 
+	"-menu")
+		case $# in
+			0)	exit 1	# must have menu function name
+				;;
+			1)	# "-menu <menu>" and no more parameters calls <menu> function and prints labels from each line
+				$1 \
+				| while read line; do
+					echo "${line%%:*}"
+				  done
+				;;
+			*)	# "-menu <menu> <label>" calls <menu> function and executes command from line with <label>
+				$1 \
+				| while read line; do
+					if [ "$2" = "${line%%:*}" ] ; then
+						command="${line#*:}"
+						eval "$command" >/dev/null 2>&1 &
+						exit
+					fi
+				  done
+		esac
+		;;
 
-if [ "$select" != "" ]; then
-
-#   fetch and clean the index of the selected label
-    index=`echo -e "${menu_labels[*]}" | grep -xnm1 $select | sed 's/:.*//'`
-    
-#   get the command which has the same index
-    part=`echo -e ${menu_commands[*]} | head -$index`
-    exe=`echo -e "$part" | tail -1`
-
-#   execute
-    $exe &
-fi
+	################
+	# unknown option
+	*)	exit 1
+esac
