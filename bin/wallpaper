@@ -13,12 +13,25 @@ if [ "$floating" -eq 0 ]; then
 	if [ "$desktop_state" = LT ]; then 
 		bspc desktop -l next
 		#$FEH $WALLPAPER_DIR/$WALLPAPER
-		st ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+		st ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile 
 		bspc desktop -l next
 	else
-		st ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+		st ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile
 	fi
 else
 	bspc rule -a floaterm state=floating center=true
-	st -c floaterm ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile && $FEH --bg-fill $(cat /tmp/.rfile)
+	st -c floaterm ranger $WALLPAPER_DIR --choosefile=/tmp/.rfile
+fi
+
+if [[ -n $(cat /tmp/.rfile) ]]; then
+	case $(cat /tmp/.rfile | cut -d. -f2) in
+	mp4|mov|wemb|wmv|m4v|flv|avi)
+		while [ $(pgrep -cx xwinwrap) -gt 0 ] ; do pkill -ox -9 xwinwrap && pkill -ox -9 mpv; done ;
+		exec xwinwrap -g 1920x1080 -ov -- mpv -wid WID  --loop-file=inf $(cat /tmp/.rfile)
+		;;
+	*)
+		while [ $(pgrep -cx xwinwrap) -gt 0 ] ; do pkill -ox -9 xwinwrap && pkill -ox -9 mpv; done ;
+		$FEH --bg-fill $(cat /tmp/.rfile)
+		;;
+	esac
 fi
