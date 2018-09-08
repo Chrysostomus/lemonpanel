@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/dash
 #
 # Manage ALSA Master channel
- 
+
 test "$1" = "-h" && echo "usage `basename $0` [up|down|mute]" && exit 0
 
 level() {
@@ -15,10 +15,10 @@ state() {
 test $# -eq 0 && echo "`level` `state`" && exit 0
 
 case $1 in
-    up)      amixer set Master ${2:-5}%+ >/dev/null;;
-    down)      amixer set Master ${2:-5}%- >/dev/null;;
-    mute)      amixer set Master toggle >/dev/null;;
-    state|level) $1;;
-    set)    amixer set Master $2% >/dev/null;;
-    *)    amixer set Master $1% >/dev/null;;
+    up)      amixer set Master ${2:-5}%+ >/dev/null ||autoalsaconfamixer;;
+    down)      amixer set Master ${2:-5}%- >/dev/null ||autoalsaconf;;
+    mute)      amixer set Master toggle >/dev/null ||autoalsaconf;;
+    state|level) $1 ||autoalsaconf;;
+    set)    amixer set Master $2% >/dev/null ||autoalsaconf;;
+    *)    amixer set Master $1% >/dev/null ||autoalsaconf;;
 esac
