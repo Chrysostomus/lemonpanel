@@ -1,0 +1,12 @@
+#!/usr/bin/env dash
+
+amixer get Master 2> /dev/null > /dev/null && exit 0 
+for card in $(awk '/ \[/ {print $1}' /proc/asound/cards); do
+	if amixer -c $card get Master 2> /dev/null > /dev/null; then
+		working_card="$card"
+		break
+	fi
+done
+
+[ -n $working_card ] && echo "defaults.pcm.card $working_card
+defaults.ctl.card $working_card" > ~/.asoundrc
